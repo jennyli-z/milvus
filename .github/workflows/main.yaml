@@ -62,7 +62,7 @@ jobs:
            elif [[ ${response_code} == '404' ]]; then 
               echo "::set-output name=is-member::false"
            else
-              echo "Please check if the repository secret GET_ORG_MEMBERS  still exists and have the permission to read organization members."
+              echo "Please check if the repository secret RERUN_BOT_TOKEN  still exists and have the permission to read organization membership."
               exit 1
            fi
       - name: Get Job URL
