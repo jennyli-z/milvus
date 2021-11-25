@@ -2,9 +2,8 @@ name: Jenkins Checker
 # Lint Jenkinsfile  and related groovy files
 
 on:
+  workflow_dispatch:
   pull_request:
-    branches:
-      - master-auto-check-groovy
     paths:
       - 'build/ci/jenkins/**'
 
