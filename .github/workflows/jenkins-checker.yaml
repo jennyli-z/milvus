@@ -3,17 +3,14 @@ name: Jenkins Checker
 
 
 on:
-  push:
-    # file paths to consider in the event. Optional; defaults to all.
-    paths:
-      - 'build/ci/jenkins/**'
+  # push:
+  #   # file paths to consider in the event. Optional; defaults to all.
+  #   paths:
+  #     - 'build/ci/jenkins/**'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'build/ci/jenkins/**'
-
-  
-
 jobs:
   check-jenkinsfile:
     name: Jenkinsfile Checker
