@@ -11,7 +11,7 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '30')
         parallelsAlwaysFailFast()
 
-    }
+   
     stages {
         stage ('E2E Test') {
             matrix {
