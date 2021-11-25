@@ -3,7 +3,10 @@ name: Jenkins Checker
 
 on:
   pull_request:
-  push: 
+    branches:
+      - master-auto-check-groovy
+    paths:
+      - 'build/ci/jenkins/**'
 
 jobs:
   check-jenkinsfile:
