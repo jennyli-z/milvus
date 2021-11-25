@@ -3,11 +3,11 @@ name: Jenkins Checker
 
 on:
   pull_request:
-    [create, edit]
+  push: 
 
 jobs:
-  ubuntu:
-    name: Jenkins Checker
+  check-jenkinsfile:
+    name: Jenkinsfile Checker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
