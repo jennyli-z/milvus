@@ -3,9 +3,7 @@ name: Jenkins Checker
 
 on:
   pull_request:
-    # file paths to consider in the event. Optional; defaults to all.
-    paths:
-      - 'build/ci/jenkins/**'
+    [create, edit]
 
 jobs:
   ubuntu:
