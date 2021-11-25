@@ -1,13 +1,16 @@
 name: Jenkins Checker
 # Lint Jenkinsfile  and related groovy files
 
+
 on:
-  pull_request:
-    types: [created]
+  push:
+    # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'build/ci/jenkins/**'
-  issue_comment:
-    types: [created]
+  pull_request:
+    # file paths to consider in the event. Optional; defaults to all.
+    paths:
+      - 'build/ci/jenkins/**'
 
   
 
