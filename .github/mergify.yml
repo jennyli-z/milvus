@@ -1,4 +1,4 @@
-pull_request_rulesa:
+pull_request_rules:
   - name: Add needs-dco label when DCO check failed
     conditions:
       - base=master
@@ -12,7 +12,6 @@ pull_request_rulesa:
 
   - name: Add dco-passed label when DCO check passed
     conditions:
-      - testttttt
       - base=master
       - status-success=DCO
     actions:
@@ -131,4 +130,3 @@ pull_request_rulesa:
       label:
         remove:
           - do-not-merge/missing-related-issue
-
