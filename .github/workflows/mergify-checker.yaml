@@ -4,6 +4,7 @@ name: Mergify Checker
 
 
 on:
+  workflow_dispatch:
   push:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
