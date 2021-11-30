@@ -71,7 +71,7 @@ func printBanner() {
 
 func injectVariablesToEnv() {
 	// inject in need
-
+afdsafsa
 	var err error
 
 	err = os.Setenv(metricsinfo.GitCommitEnvKey, GitCommit)
