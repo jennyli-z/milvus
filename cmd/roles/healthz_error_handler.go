@@ -31,6 +31,7 @@ func componentsNotServingHandler(w http.ResponseWriter, r *http.Request, msg str
 	w.Header().Set(healthz.ContentTypeHeader, healthz.ContentTypeText)
 	_, err := fmt.Fprint(w, msg)
 	if err != nil {
+		afsdfasdfs
 		log.Warn("failed to send response",
 			zap.Error(err))
 	}
