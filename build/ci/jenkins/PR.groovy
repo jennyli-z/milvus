@@ -23,6 +23,9 @@ pipeline {
                 // idleMinutes 120
             }
     }
+    parameters {
+        string(name: 'MILVUS_HELM_VERSION', defaultValue: 'milvus-2.4.10', description: 'charts version')
+    }
     environment {
         PROJECT_NAME = "milvus"
         SEMVER = "${BRANCH_NAME.contains('/') ? BRANCH_NAME.substring(BRANCH_NAME.lastIndexOf('/') + 1) : BRANCH_NAME}"
@@ -115,6 +118,7 @@ pipeline {
                                                     sh """
                                                     MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
                                                     TAG=${imageTag}\
+                                                    MILVUS_HELM_BRANCH=${env.MILVUS_HELM_VERSION} \
                                                     ./e2e-k8s.sh \
                                                     --skip-export-logs \
                                                     --skip-cleanup \

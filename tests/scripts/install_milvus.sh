@@ -17,7 +17,7 @@ set -e
 # Print commands
 set -x
 
-MILVUS_HELM_BRANCH=milvus-2.4.10
+
 MILVUS_HELM_REPO="https://github.com/milvus-io/milvus-helm.git"
 MILVUS_HELM_RELEASE_NAME="${MILVUS_HELM_RELEASE_NAME:-milvus-testing}"
 MILVUS_CLUSTER_ENABLED="${MILVUS_CLUSTER_ENABLED:-false}"
