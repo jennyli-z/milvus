@@ -166,16 +166,33 @@ pipeline {
 
                     }
                 }
-                post {
-                    always {
-                        container('main') {
-                            dir ('tests/scripts') {  
-                                script {
-                                    def release_name=sh(returnStdout: true, script: './get_release_name.sh')
-                                    sh "./uninstall_milvus.sh --release-name ${release_name}"
-                                }
-                            }
+            }
+        }
+    }
+    post{
+         unsuccessful {
+            container('jnlp') {
+                dir ('tests/scripts') {
+                    script {
+                        def authorEmail = sh(returnStdout: true, script: './get_author_email.sh ')
+                        emailext subject: '$DEFAULT_SUBJECT',
+                        body: '$DEFAULT_CONTENT',
+                        recipientProviders: [developers(), culprits()],
+                        replyTo: '$DEFAULT_REPLYTO',
+                        to: "${authorEmail},devops@zilliz.com"
+                    }
+                }
+            }
+        }
+        always {
+                container('main') {
+                    dir ('tests/scripts') {  
+                        script {
+                            def release_name=sh(returnStdout: true, script: './get_release_name.sh')
+                            sh "./uninstall_milvus.sh --release-name ${release_name}"
                         }
+                    }
+                }
                         container('pytest') {
                             dir ('tests/scripts') {
                             script {
@@ -192,26 +209,6 @@ pipeline {
                             }
                         }
                         }
-                    }
-
-                }
-            }
-        }
-    }
-    post{
-                unsuccessful {
-                container('jnlp') {
-                    dir ('tests/scripts') {
-                        script {
-                            def authorEmail = sh(returnStdout: true, script: './get_author_email.sh ')
-                            emailext subject: '$DEFAULT_SUBJECT',
-                            body: '$DEFAULT_CONTENT',
-                            recipientProviders: [developers(), culprits()],
-                            replyTo: '$DEFAULT_REPLYTO',
-                            to: "${authorEmail},devops@zilliz.com"
-                        }
-                    }
-                }
             }
         }
 }
