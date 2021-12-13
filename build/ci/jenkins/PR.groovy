@@ -188,7 +188,7 @@ pipeline {
                 }
             }
             always {
-                node(POD_LABEL) {
+                node('milvus-e2e-test-pr') {
                     container('main') {
                         dir ('tests/scripts') {  
                             script {
