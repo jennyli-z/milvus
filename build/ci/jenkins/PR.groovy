@@ -168,8 +168,8 @@ pipeline {
                 }
             }
         }
-    }
-    post{
+
+        post{
          unsuccessful {
             container('jnlp') {
                 dir ('tests/scripts') {
@@ -211,4 +211,5 @@ pipeline {
                         }
             }
         }
+    }
 }
