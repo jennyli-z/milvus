@@ -52,7 +52,7 @@ jobs:
           name: "Test check run"
           head_sha: ${{ github.sha }}
           output: | # The | is significant!
-            title: Test check run title
+            title: Code Checker AMD64 Ubuntu 18.04
             summary: A summary of the test check run
             images:
               - alt: Test image
