@@ -42,8 +42,14 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Check-Runs
-        uses: jcamiloradamesa/github-checkrun@v1.1  
+      - uses: LouisBrunner/checks-action@v1.1.1
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Code Checker AMD64 Ubuntu
+          conclusion: ${{ job.status }}
+          output: |
+            {"summary":${{ steps.test.outputs.summary }}}
       - name: Github API Request
         id: create_check_run
         uses: octokit/request-action@v2.1.0
