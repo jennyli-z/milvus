@@ -23,7 +23,7 @@ on:
       - go.sum
 
 jobs:
-  ubuntu:
+  code-checker:
     if:  "github.event_name == 'pull_request' || (github.event_name == 'issue_comment'&& startsWith(github.event.comment.body, '/run-checks'))"
     name: Code Checker AMD64 Ubuntu ${{ matrix.ubuntu }}
     runs-on: ubuntu-latest
@@ -37,6 +37,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: LouisBrunner/checks-action@v1.1.1
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test XYZ
+          status: in_progress
       - name: Cache CCache Volumes
         uses: actions/cache@v1
         with:
