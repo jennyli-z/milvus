@@ -49,7 +49,7 @@ jobs:
           route:  POST /repos/{owner}/{repo}/check-runs
           owner: jennyli-z
           repo: milvus
-          name: "Test check run"
+          name: "Code Checker AMD64 Ubuntu 18.04"
           head_sha: ${{ github.sha }}
           output: | # The | is significant!
             title: Code Checker AMD64 Ubuntu 18.04
