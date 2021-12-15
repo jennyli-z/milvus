@@ -42,6 +42,18 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Create comment
+        if: steps.check.outputs.triggered == 'true'
+        env:
+          URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -X POST \
+            $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data '{ "body": ":test_tube: [starting ci integration job]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'
       - name: Github API Request
         id: request
         uses: octokit/request-action@v2.1.0
@@ -63,6 +75,39 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ steps.pr_data.outputs.branch }}
+       - name: debug
+        if: steps.check.outputs.triggered == 'true'
+        id: debug
+        run: |
+          echo ::set-output name=sha::$( curl -u "u:${{github.token}}" https://api.github.com/repos/${{steps.pr_data.outputs.repo_name}}/git/ref/heads/${{steps.pr_data.outputs.branch}} | jq .object.sha | tr -d '"' )
+      - name: Create success comment
+        if:  steps.check.outputs.triggered == 'true' &&  success()
+    
+        env:
+          URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -X POST \
+            $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data '{ "body": ":v: [finish ci integration job successfully]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'    
+        
+      - name: Create fail comment
+        if:  steps.check.outputs.triggered == 'true' && failure()
+    
+        env:
+          URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -X POST \
+            $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data '{ "body": ":facepalm: [ci integration job failed]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'
+      
       - name: Checkout
         if: "github.event_name == 'pull_request'"
         uses: actions/checkout@v2
