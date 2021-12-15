@@ -47,7 +47,7 @@ jobs:
         uses: octokit/request-action@v2.1.0
         with:
           route:  POST /repos/{owner}/{repo}/check-runs
-          owner: milvus-io
+          owner: jennyli-z
           repo: milvus
           name: "Test check run"
           head_sha: ${{ github.sha }}
@@ -58,7 +58,7 @@ jobs:
               - alt: Test image
                 image_url: https://octodex.github.com/images/jetpacktocat.png
         env:
-          GITHUB_TOKEN: ${{ secrets.RERUN_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get PR informations
         if: steps.check.outputs.triggered == 'true'
         id: pr_data
@@ -98,10 +98,10 @@ jobs:
         id: update_check_run
         with:
           route: PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}
-          owner: milvus-io
+          owner: jennyli-z
           repo: milvus
           check_run_id: ${{ fromJson(steps.create_check_run.outputs.data).id }}
           conclusion: "success"
           status: "completed"
         env:
-          GITHUB_TOKEN: ${{ secrets.RERUN_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
