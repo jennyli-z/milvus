@@ -42,23 +42,21 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Create comment
-        if: steps.check.outputs.triggered == 'true'
-        env:
-          URL: ${{ github.event.issue.comments_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl \
-            -X POST \
-            $URL \
-            -H "Content-Type: application/json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": ":test_tube: [starting ci integration job]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'
       - name: Github API Request
-        id: request
+        id: create_check_run
         uses: octokit/request-action@v2.1.0
         with:
-          route: ${{ github.event.issue.pull_request.url }}
+          route:  POST /repos/{owner}/{repo}/check-runs
+          owner: milvus-io
+          repo: milvus
+          name: "Test check run"
+          head_sha: ${{ github.sha }}
+          output: | # The | is significant!
+            title: Test check run title
+            summary: A summary of the test check run
+            images:
+              - alt: Test image
+                image_url: https://octodex.github.com/images/jetpacktocat.png
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get PR informations
@@ -75,39 +73,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ steps.pr_data.outputs.branch }}
-       - name: debug
-        if: steps.check.outputs.triggered == 'true'
-        id: debug
-        run: |
-          echo ::set-output name=sha::$( curl -u "u:${{github.token}}" https://api.github.com/repos/${{steps.pr_data.outputs.repo_name}}/git/ref/heads/${{steps.pr_data.outputs.branch}} | jq .object.sha | tr -d '"' )
-      - name: Create success comment
-        if:  steps.check.outputs.triggered == 'true' &&  success()
-    
-        env:
-          URL: ${{ github.event.issue.comments_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl \
-            -X POST \
-            $URL \
-            -H "Content-Type: application/json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": ":v: [finish ci integration job successfully]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'    
-        
-      - name: Create fail comment
-        if:  steps.check.outputs.triggered == 'true' && failure()
-    
-        env:
-          URL: ${{ github.event.issue.comments_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl \
-            -X POST \
-            $URL \
-            -H "Content-Type: application/json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": ":facepalm: [ci integration job failed]( https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"')" }'
-      
       - name: Checkout
         if: "github.event_name == 'pull_request'"
         uses: actions/checkout@v2
@@ -128,3 +93,15 @@ jobs:
           CHECK_BUILDER: "1"
         run: |
           ./build/builder.sh /bin/bash -c "make check-proto-product && make verifiers"
+      # Update check run to completed, successful status
+      - uses: octokit/request-action@v2.x
+        id: update_check_run
+        with:
+          route: PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}
+          owner: milvus-io
+          repo: milvus
+          check_run_id: ${{ fromJson(steps.create_check_run.outputs.data).id }}
+          conclusion: "success"
+          status: "completed"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
