@@ -42,6 +42,8 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Check-Runs
+        uses: jcamiloradamesa/github-checkrun@v1.1  
       - name: Github API Request
         id: create_check_run
         uses: octokit/request-action@v2.1.0
