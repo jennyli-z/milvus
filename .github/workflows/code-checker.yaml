@@ -46,7 +46,7 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: Code Checker AMD64 Ubuntu
+          name: Code Checker AMD64 Ubuntu 18.04
           conclusion: ${{ job.status }}
       - name: Github API Request
         id: create_check_run
