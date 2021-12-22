@@ -1,6 +1,5 @@
 name: Debug UT
 on:
-  push:
   workflow_dispatch:
 jobs:
   ubuntu:
