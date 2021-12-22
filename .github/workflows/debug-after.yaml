@@ -15,13 +15,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Cache CCache Volumes
+        uses: actions/cache@v1
+        with:
+          path: .docker/amd64-ubuntu${{ matrix.ubuntu }}-ccache
+          key: ubuntu${{ matrix.ubuntu }}-ccache-${{ hashFiles('internal/core/**') }}
+          restore-keys: ubuntu${{ matrix.ubuntu }}-ccache-
+      - name: Cache Go Mod Volumes
+        uses: actions/cache@v1
+        with:
+          path: .docker/amd64-ubuntu${{ matrix.ubuntu }}-go-mod
+          key: ubuntu${{ matrix.ubuntu }}-go-mod-${{ hashFiles('**/go.sum') }}
+          restore-keys: ubuntu${{ matrix.ubuntu }}-go-mod-
       - name: Start Service
         shell: bash
         run: |
           docker-compose up -d pulsar etcd minio
+      - name: Build and UnitTest
+        env:
+          CHECK_BUILDER: "1"
+        run: |
+          ./build/builder.sh /bin/bash -c "make check-proto-product && make codecov"
       - uses: shaowenchen/debugger-action@v2
         name: debugger
-        timeout-minutes: 30
+        timeout-minutes: 60
         continue-on-error: true
         with:
           ngrok_token: ${{ secrets.NGROK_TOKEN }}  
