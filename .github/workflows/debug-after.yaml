@@ -1,4 +1,4 @@
-name: Debug UT
+name: Debug UT After
 on:
   workflow_dispatch:
 jobs:
@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Start Service
+        shell: bash
+        run: |
+          docker-compose up -d pulsar etcd minio
       - uses: shaowenchen/debugger-action@v2
         name: debugger
         timeout-minutes: 30
