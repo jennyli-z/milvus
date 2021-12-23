@@ -113,7 +113,7 @@ function gen_kubeconf_from_sa () {
     SECRET_NAME=$(kubectl get sa "${service_account}" -n istio-system-multi -o jsonpath='{.secrets[].name}')
     CA_DATA=$(kubectl get secret "${SECRET_NAME}" -n istio-system-multi -o "jsonpath={.data['ca\\.crt']}")
     TOKEN=$(kubectl get secret "${SECRET_NAME}" -n istio-system-multi -o "jsonpath={.data['token']}" | base64 --decode)
-
+#test
     cat <<EOF > "${filename}"
       apiVersion: v1
       clusters:
