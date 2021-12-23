@@ -160,7 +160,7 @@ func (ta *Allocator) Init() {
 	ta.ForceSyncChan = make(chan Request, maxConcurrentRequests)
 	ta.Reqs = make(chan Request, maxConcurrentRequests)
 }
-
+//
 func (ta *Allocator) mainLoop() {
 	defer ta.wg.Done()
 
