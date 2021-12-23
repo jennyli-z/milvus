@@ -31,7 +31,7 @@ uid=$(id -u)
 gid=$(id -g)
 [ "$uid" -lt 500 ] && uid=501
 [ "$gid" -lt 500 ] && gid=$uid
-
+exit 1 
 mkdir -p "${DOCKER_VOLUME_DIRECTORY:-.docker}/amd64-${OS_NAME}-ccache"
 mkdir -p "${DOCKER_VOLUME_DIRECTORY:-.docker}/amd64-${OS_NAME}-go-mod"
 mkdir -p "${DOCKER_VOLUME_DIRECTORY:-.docker}/thirdparty"
