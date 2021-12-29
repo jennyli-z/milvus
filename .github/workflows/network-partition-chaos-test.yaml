@@ -38,8 +38,7 @@ jobs:
         shell: bash
         working-directory: tests/python_client/chaos
         run: |
-          pip install -r ../requirements.txt
-          pip install --upgrade protobuf      
+          pip install -r ../requirements.txt   
 
       - name: Deploy Chaos Mesh
         shell: bash

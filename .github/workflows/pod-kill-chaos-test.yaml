@@ -49,7 +49,7 @@ jobs:
           shell: bash
           command: |
             pip install -r tests/python_client/requirements.txt --trusted-host https://test.pypi.org
-            pip install --upgrade protobuf
+            pip list | grep protobuf
       
       - name: Deploy Chaos Mesh
         shell: bash

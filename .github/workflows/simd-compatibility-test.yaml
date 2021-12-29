@@ -38,7 +38,7 @@ jobs:
         working-directory: tests/python_client/deploy
         run: |
           pip install -r requirements.txt
-          pip install --upgrade protobuf
+          pip list | grep protobuf
 
       - name: install milvus operator and milvus cluster
         shell: bash
