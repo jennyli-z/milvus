@@ -26,7 +26,10 @@ jobs:
           retry_on: error
           shell: bash
           command: |
-            pip install -r tests/python_client/requirements.txt
+            pip install -r tests/python_client/deploy/requirements.txt
             pip list | grep protobuf
+            pip install --upgrade protobuf   
+            pip list | grep protobuf
+             
 
       
