@@ -43,11 +43,11 @@ pipeline {
                                 export MILVUS_IMAGE_REPO="${env.TARGET_REPO}/milvus-dev"
                                 export MILVUS_HARBOR_IMAGE_REPO="${env.HARBOR_REPO}/milvus/milvus"
                                 export MILVUS_IMAGE_TAG="${env.BRANCH_NAME}-${date}-${gitShortCommit}"
+                                docker info
                                 build/build_image.sh
-                                docker push \${MILVUS_IMAGE_REPO}:\${MILVUS_IMAGE_TAG}
                                 docker tag \${MILVUS_IMAGE_REPO}:\${MILVUS_IMAGE_TAG} \${MILVUS_IMAGE_REPO}:${env.BRANCH_NAME}-latest
                                 docker tag \${MILVUS_IMAGE_REPO}:\${MILVUS_IMAGE_TAG} \${MILVUS_HARBOR_IMAGE_REPO}:\${MILVUS_IMAGE_TAG}
-                                docker push \${MILVUS_IMAGE_REPO}:${env.BRANCH_NAME}-latest
+                               
                                 docker logout
                             """
                         }
@@ -57,7 +57,6 @@ pipeline {
                             sh """
                                 export MILVUS_HARBOR_IMAGE_REPO="${env.HARBOR_REPO}/milvus/milvus"
                                 export MILVUS_IMAGE_TAG="${env.BRANCH_NAME}-${date}-${gitShortCommit}"
-                                docker push \${MILVUS_HARBOR_IMAGE_REPO}:\${MILVUS_IMAGE_TAG}
                                 docker logout
                             """
                         }
