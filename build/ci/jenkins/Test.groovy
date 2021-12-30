@@ -48,7 +48,6 @@ stages{
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
                                 customWorkspace '/home/jenkins/agent/workspace'
-                                idleMinutes 120
                             }
                        }
                         steps {
