@@ -60,10 +60,7 @@ if [ ! -d "${CI_LOG_PATH}" ]; then
   # create dir for ci log path when it does not exist
   mkdir -p ${CI_LOG_PATH}
 fi
-trace "prepare e2e test"  install_pytest_requirements  
-
-
-
+install_pytest_requirements  
 if [[ -n "${TEST_TIMEOUT:-}" ]]; then
   timeout  "${TEST_TIMEOUT}" pytest --host ${MILVUS_SERVICE_NAME} --port ${MILVUS_SERVICE_PORT} \
                                      --html=${CI_LOG_PATH}/report.html  --self-contained-html ${@:-}
