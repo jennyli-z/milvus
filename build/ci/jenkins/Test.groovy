@@ -13,7 +13,15 @@ pipeline {
         preserveStashes(buildCount: 5)
 
     }
-    agent none
+    agent {
+            kubernetes {
+                label 'milvus-e2e-test-build-install-clean'
+                inheritFrom 'default'
+                defaultContainer 'main'
+                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                customWorkspace '/home/jenkins/agent/workspace'
+            }
+    }
     environment {
         PROJECT_NAME = 'milvus'
         SEMVER = "${BRANCH_NAME.contains('/') ? BRANCH_NAME.substring(BRANCH_NAME.lastIndexOf('/') + 1) : BRANCH_NAME}"
@@ -30,15 +38,6 @@ pipeline {
 
     stages {
         stage ('Build'){
-            agent {
-                    kubernetes {
-                        label 'milvus-e2e-build'
-                        inheritFrom 'default'
-                        defaultContainer 'main'
-                        yamlFile 'build/ci/jenkins/pod/rte.yaml'
-                        customWorkspace '/home/jenkins/agent/workspace'
-                    }
-            }
             steps {
                 container('main') {
                     // dir ('build'){
@@ -91,15 +90,6 @@ pipeline {
                 stages {
 
                     stage('Install') {
-                        agent {
-                            kubernetes {
-                                label 'milvus-e2e-install'
-                                inheritFrom 'default'
-                                defaultContainer 'main'
-                                yamlFile 'build/ci/jenkins/pod/rte.yaml'
-                                customWorkspace '/home/jenkins/agent/workspace'
-                            }
-                       }
                         steps {
                             container('main') {
                                 dir ('tests/scripts') {
@@ -154,7 +144,7 @@ pipeline {
                     stage('E2E Test'){
                         agent {
                             kubernetes {
-                                label 'milvus-e2e-test'
+                                label 'milvus-e2e-test-agent'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
