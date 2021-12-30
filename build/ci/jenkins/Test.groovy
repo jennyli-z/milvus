@@ -13,7 +13,7 @@ pipeline {
         preserveStashes(buildCount: 5)
 
     }
-    agent any
+    agent none
     environment {
         PROJECT_NAME = 'milvus'
         SEMVER = "${BRANCH_NAME.contains('/') ? BRANCH_NAME.substring(BRANCH_NAME.lastIndexOf('/') + 1) : BRANCH_NAME}"
@@ -29,16 +29,16 @@ pipeline {
     }
 
     stages {
-        agent {
-                kubernetes {
-                    label 'milvus-e2e-test-agent'
-                    inheritFrom 'default'
-                    defaultContainer 'main'
-                    yamlFile 'build/ci/jenkins/pod/rte.yaml'
-                    customWorkspace '/home/jenkins/agent/workspace'
-                }
-        }
         stage ('Build'){
+            agent {
+                    kubernetes {
+                        label 'milvus-e2e-test-agent'
+                        inheritFrom 'default'
+                        defaultContainer 'main'
+                        yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                        customWorkspace '/home/jenkins/agent/workspace'
+                    }
+            }
             steps {
                 container('main') {
                     // dir ('build'){
@@ -75,6 +75,7 @@ pipeline {
 
 
         stage('Install & E2E Test') {
+
             matrix {
                 axes {
                     axis {
@@ -88,7 +89,17 @@ pipeline {
                 }
 
                 stages {
+
                     stage('Install') {
+                        agent {
+                            kubernetes {
+                                label 'milvus-e2e-test-agent'
+                                inheritFrom 'default'
+                                defaultContainer 'main'
+                                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                                customWorkspace '/home/jenkins/agent/workspace'
+                            }
+                       }
                         steps {
                             container('main') {
                                 dir ('tests/scripts') {
@@ -113,6 +124,7 @@ pipeline {
                                             }
                                             withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
                                                 sh 'whoami'
+                                                sh "echo imageTag is ${imageTag}"
                                                 // sh """
                                                 // MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
                                                 // TAG=${imageTag}\
@@ -140,25 +152,36 @@ pipeline {
                         }
                     }
                     stage('E2E Test'){
+                        agent {
+                            kubernetes {
+                                label 'milvus-e2e-test-agent'
+                                inheritFrom 'default'
+                                defaultContainer 'main'
+                                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                                customWorkspace '/home/jenkins/agent/workspace'
+                            }
+                       }
                         steps {
                             container('pytest') {
                                 dir ('tests/scripts') {
                                     script {
+                                        sh 'printenv'
                                         def release_name=sh(returnStdout: true, script: './get_release_name.sh')
                                         def clusterEnabled = 'false'
-                                        if ("${MILVUS_SERVER_TYPE}" == "distributed") {
-                                            clusterEnabled = "true"
-                                        }
-                                        if ("${MILVUS_CLIENT}" == "pymilvus") {
-                                            sh """
-                                            MILVUS_HELM_RELEASE_NAME="${release_name}" \
-                                            MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
-                                            TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                            ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
-                                            """
-                                        } else {
-                                        error "Error: Unsupported Milvus client: ${MILVUS_CLIENT}"
-                                        }
+                                        sh "echo ${release_name}"
+                                        // if ("${MILVUS_SERVER_TYPE}" == "distributed") {
+                                        //     clusterEnabled = "true"
+                                        // }
+                                        // if ("${MILVUS_CLIENT}" == "pymilvus") {
+                                        //     sh """
+                                        //     MILVUS_HELM_RELEASE_NAME="${release_name}" \
+                                        //     MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
+                                        //     TEST_TIMEOUT="${e2e_timeout_seconds}" \
+                                        //     ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                        //     """
+                                        // } else {
+                                        // error "Error: Unsupported Milvus client: ${MILVUS_CLIENT}"
+                                        // }
                                     }
                                 }
                             }
