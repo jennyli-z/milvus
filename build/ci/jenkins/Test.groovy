@@ -144,11 +144,12 @@ pipeline {
                     stage('E2E Test'){
                         agent {
                             kubernetes {
-                                label 'milvus-e2e-test-agent'
+                                label 'milvus-e2e-python-test-agent'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/python.yaml'
                                 customWorkspace '/home/jenkins/agent/workspace'
+                                idleMinutes 120
                             }
                        }
                         steps {
@@ -159,6 +160,9 @@ pipeline {
                                         def release_name=sh(returnStdout: true, script: './get_release_name.sh')
                                         def clusterEnabled = 'false'
                                         sh "echo ${release_name}"
+                                        sh "pip list | grep protobuf"
+                                        sh "cd .. && cd python_client && ls -lah \
+                                             && python3 -m pip install -r requirements.txt"
                                         // if ("${MILVUS_SERVER_TYPE}" == "distributed") {
                                         //     clusterEnabled = "true"
                                         // }
@@ -197,9 +201,7 @@ pipeline {
                                         def release_name = sh(returnStdout: true, script: './get_release_name.sh ')
                                         sh 'whoami'
                                         sh "echo ${release_name}"
-                                        sh "pip list | grep protobuf"
-                                        sh "cd .. && cd python_client && ls -lah \
-                                             && python3 -m pip install -r requirements.txt"
+
                                         // sh "./ci_logs.sh --log-dir /ci-logs  --artifacts-name ${env.ARTIFACTS}/artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${SEMVER}-${env.BUILD_NUMBER}-${MILVUS_CLIENT}-e2e-logs \
                                         // --release-name ${release_name}"
                                         // dir("${env.ARTIFACTS}") {
