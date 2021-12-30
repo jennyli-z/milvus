@@ -18,7 +18,7 @@ pipeline {
                 label 'milvus-e2e-test-build-install-clean'
                 inheritFrom 'default'
                 defaultContainer 'main'
-                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                yamlFile 'build/ci/jenkins/pod/python.yaml'
                 customWorkspace '/home/jenkins/agent/workspace'
             }
     }
@@ -147,7 +147,7 @@ pipeline {
                                 label 'milvus-e2e-test-agent'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
-                                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                                yamlFile 'build/ci/jenkins/pod/python.yaml'
                                 customWorkspace '/home/jenkins/agent/workspace'
                             }
                        }
@@ -197,6 +197,8 @@ pipeline {
                                         def release_name = sh(returnStdout: true, script: './get_release_name.sh ')
                                         sh 'whoami'
                                         sh "echo ${release_name}"
+                                        sh "pip list | grep protobuf"
+                                        sh "python3 -m pip install -r requirements.txt"
                                         // sh "./ci_logs.sh --log-dir /ci-logs  --artifacts-name ${env.ARTIFACTS}/artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${SEMVER}-${env.BUILD_NUMBER}-${MILVUS_CLIENT}-e2e-logs \
                                         // --release-name ${release_name}"
                                         // dir("${env.ARTIFACTS}") {
