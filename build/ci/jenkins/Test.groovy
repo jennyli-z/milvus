@@ -198,7 +198,8 @@ pipeline {
                                         sh 'whoami'
                                         sh "echo ${release_name}"
                                         sh "pip list | grep protobuf"
-                                        sh "python3 -m pip install -r requirements.txt"
+                                        sh "cd .. && cd python_client && ls -lah \
+                                             && python3 -m pip install -r requirements.txt"
                                         // sh "./ci_logs.sh --log-dir /ci-logs  --artifacts-name ${env.ARTIFACTS}/artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${SEMVER}-${env.BUILD_NUMBER}-${MILVUS_CLIENT}-e2e-logs \
                                         // --release-name ${release_name}"
                                         // dir("${env.ARTIFACTS}") {
