@@ -32,7 +32,7 @@ pipeline {
         stage ('Build'){
             agent {
                     kubernetes {
-                        label 'milvus-e2e-test-agent'
+                        label 'milvus-e2e-build'
                         inheritFrom 'default'
                         defaultContainer 'main'
                         yamlFile 'build/ci/jenkins/pod/rte.yaml'
@@ -93,7 +93,7 @@ pipeline {
                     stage('Install') {
                         agent {
                             kubernetes {
-                                label 'milvus-e2e-test-agent'
+                                label 'milvus-e2e-install'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
@@ -154,7 +154,7 @@ pipeline {
                     stage('E2E Test'){
                         agent {
                             kubernetes {
-                                label 'milvus-e2e-test-agent'
+                                label 'milvus-e2e-test'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
