@@ -50,7 +50,6 @@ pipeline {
                             def gitShortCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()    
                             imageTag="${env.BRANCH_NAME}-${date}-${gitShortCommit}"
                             withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
-                                sh 'whoami'
                                 sh """
                                 TAG="${imageTag}" \
                                 ./e2e-k8s.sh \
