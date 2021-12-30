@@ -41,7 +41,7 @@ MILVUS_SERVICE_NAME=$(echo "${MILVUS_HELM_RELEASE_NAME}-milvus.milvus-ci" | tr -
 MILVUS_SERVICE_PORT="19530"
 
 # shellcheck source=build/lib.sh
-source "${ROOT}/build/lib.sh"
+#source "${ROOT}/build/lib.sh"
 
 
 # shellcheck source=ci-util.sh
