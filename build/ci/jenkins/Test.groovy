@@ -57,12 +57,13 @@ stages{
                                     script {
                                         sh 'printenv'
                                         sh "echo ${RELEASE_NAME}"
-                                        // sh """
-                                        // MILVUS_HELM_RELEASE_NAME="${RELEASE_NAME}" \
-                                        // MILVUS_CLUSTER_ENABLED="true" \
-                                        // TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                        // ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
-                                        // """
+                                        sh """
+                                        MILVUS_HELM_RELEASE_NAME="${RELEASE_NAME}" \
+                                        MILVUS_HELM_NAMESPACE="pulsar-test"
+                                        MILVUS_CLUSTER_ENABLED="true" \
+                                        TEST_TIMEOUT="${e2e_timeout_seconds}" \
+                                        ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                        """
                                     }
                                 }
                             }
