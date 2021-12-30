@@ -37,6 +37,10 @@ stages{
                         name 'RELEASE_NAME'
                         values 'master-new', 'master-old'
                     }
+                    axis {
+                        name 'TEST_LEVEL'
+                        values 'L0', 'L1'
+                    }
                 }
 
                 stages {
@@ -62,7 +66,7 @@ stages{
                                         MILVUS_HELM_NAMESPACE="pulsar-test" \
                                         MILVUS_CLUSTER_ENABLED="true" \
                                         TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                        ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                        ./ci_e2e.sh  "-n 6 -x --tags ${TEST_LEVEL} --timeout ${case_timeout_seconds}"
                                         """
                                     }
                                 }
