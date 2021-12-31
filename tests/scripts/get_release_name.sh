@@ -22,7 +22,7 @@ set -u
 set -x
 function milvus_ci_release_name(){
     # rules for helm release name 
-    local name="m"
+    local name="pulsar-test-"
     if [[ "${MILVUS_SERVER_TYPE:-}" == "distributed" ]]; then
         # distributed mode
        name+="d"
