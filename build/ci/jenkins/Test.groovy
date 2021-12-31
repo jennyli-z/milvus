@@ -35,7 +35,7 @@ stages{
                 axes {
                     axis {
                         name 'RELEASE_NAME'
-                        values 'm-n-1', 'm-n-2','m-n-3'
+                        values 'm-n-1'
                     }
                 }
 
@@ -48,7 +48,6 @@ stages{
                                 defaultContainer 'main'
                                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
                                 customWorkspace '/home/jenkins/agent/workspace'
-                                idleMinutes 120
                             }
                        }
                         steps {
