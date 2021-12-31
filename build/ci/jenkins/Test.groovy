@@ -66,6 +66,11 @@ stages{
                                     }
                                 }
                             }
+                            container('main') {
+                                script {
+                                    sh "kubectl get pods -n pulsar-test -o wide | grep  \"${RELEASE_NAME}-\" "
+                                }
+                            }
                         }
 
                     }
