@@ -20,6 +20,9 @@ set -e
 set -u
 # Print commands
 set -x
+
+CI_MODE=${CI_MODE:-pr}
+
 function milvus_ci_release_name(){
     # Rules for helm release name 
     local name="m"
@@ -42,6 +45,12 @@ function milvus_ci_release_name(){
             name+="-${JENKINS_BUILD_ID}"
     fi 
 
+    # Add CI Mode into Name
+    if [[ "${CI_MODE}" == "nightly" ]];then
+         name+="-n"
+    else
+         name+="-pr"
+    fi
     export MILVUS_HELM_RELEASE_NAME=${name}
     echo ${name}
 }
