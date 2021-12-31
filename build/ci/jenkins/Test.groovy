@@ -35,7 +35,7 @@ stages{
                 axes {
                     axis {
                         name 'RELEASE_NAME'
-                        values 'm-n-1'
+                        values 'm-n-2','m-n-3'
                     }
                 }
 
