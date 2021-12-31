@@ -46,7 +46,7 @@ stages{
                                 label 'pulsar-test'
                                 inheritFrom 'default'
                                 defaultContainer 'main'
-                                yamlFile 'build/ci/jenkins/pod/rte.yaml'
+                                yamlFile 'build/ci/jenkins/pod/qa.yaml'
                                 customWorkspace '/home/jenkins/agent/workspace'
                             }
                        }
