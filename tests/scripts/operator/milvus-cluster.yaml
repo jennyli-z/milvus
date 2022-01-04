@@ -1,0 +1,10 @@
+apiVersion: milvus.io/v1alpha1
+kind: MilvusCluster
+metadata:
+  name: md-1
+  labels:
+    app: milvus
+spec:
+  dependencies: {}
+  components: {}
+  config: {}
