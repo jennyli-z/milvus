@@ -49,9 +49,6 @@ spec:
       requests:
         cpu: "2"
         memory: 10Gi
-    volumeMounts:
-    - mountPath: /ci-logs
-      name: ci-logs  
   volumes:
   - emptyDir: {}
     name: docker-graph
