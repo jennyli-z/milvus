@@ -163,10 +163,7 @@ pipeline {
                                             TEST_TIMEOUT="${e2e_timeout_seconds}" \
                                             ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
                                             """
-                                            dir("${env.ARTIFACTS}") {
-                                                sh "tar -zcvf artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz /tmp/ci_logs/test --remove-files || true"
-                                                archiveArtifacts artifacts: "artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz ", allowEmptyArchive: true
-                                            }
+                            
                                         } else {
                                         error "Error: Unsupported Milvus client: ${MILVUS_CLIENT}"
                                         }
@@ -179,6 +176,12 @@ pipeline {
                 }
                 post{
                     always {
+                        container('pytest'){
+                            dir("${env.ARTIFACTS}") {
+                                sh "tar -zcvf artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz /tmp/ci_logs/test --remove-files || true"
+                                archiveArtifacts artifacts: "artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz ", allowEmptyArchive: true
+                            }
+                        }
                         container('main') {
                             dir ('tests/scripts') {  
                                 script {
