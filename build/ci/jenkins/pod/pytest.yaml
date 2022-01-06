@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: milvus-e2e-pytest
+  namespace: jenkins
+spec:
+  enableServiceLinks: false
+  containers:
+  - name: pytest
+    image: milvusdb/pytest:20211229-b4c3cd8
+    resources:
+      limits:
+        cpu: "6"
+        memory: 12Gi
+      requests:
+        cpu: "1"
+        memory: 5Gi
