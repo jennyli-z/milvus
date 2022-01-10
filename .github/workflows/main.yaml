@@ -35,12 +35,13 @@ on:
 jobs:
   ubuntu:
     name: Build and test AMD64 Ubuntu ${{ matrix.ubuntu }}
-    runs-on: ubuntu-${{ matrix.ubuntu }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         ubuntu: [18.04]
+         os: [ubuntu-18.04,macos-11]
     env:
       UBUNTU: ${{ matrix.ubuntu }}
     steps:

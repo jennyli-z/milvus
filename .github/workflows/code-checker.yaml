@@ -26,9 +26,10 @@ jobs:
     runs-on: ubuntu-${{ matrix.ubuntu }}
     timeout-minutes: 60
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         ubuntu: [18.04]
+        os: [ubuntu-18.04,macos-11]
     env:
       UBUNTU: ${{ matrix.ubuntu }}
     steps:
