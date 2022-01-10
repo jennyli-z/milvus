@@ -26,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
         - name: Code Checker AMD64 Ubuntu 18.04
@@ -46,17 +46,20 @@ jobs:
           key: ubuntu18.04-ccache-${{ hashFiles('internal/core/**') }}
           restore-keys: ubuntu18.04-ccache-
       - name: Cache Go Mod Volumes
+        if: ${{  matrix.os == 'ubuntu-18.04' }}
         uses: actions/cache@v1
         with:
           path: .docker/amd64-ubuntu18.04-go-mod
           key: ubuntu18.04-go-mod-${{ hashFiles('**/go.sum') }}
           restore-keys: ubuntu18.04-go-mod-
       - name: Code Check
+        if: ${{  matrix.os == 'ubuntu-18.04' }}
         env:
           CHECK_BUILDER: "1"
         run: |
            ./build/builder.sh /bin/bash -c "make check-proto-product && make verifiers"
       - name: Code Check
+        if: ${{  matrix.os == 'macos-11' }}
         run: |
            brew install boost libomp llvm ninja tbb
            make check-proto-product && make verifiers
