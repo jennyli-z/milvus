@@ -53,7 +53,7 @@ jobs:
           key: ubuntu18.04-go-mod-${{ hashFiles('**/go.sum') }}
           restore-keys: ubuntu18.04-go-mod-
       - name: Code Check
-        if: ${{ ${{ matrix.os }} == 'ubuntu-18.04' }}
+        if:  ${{ ${{ matrix.os }} == ubuntu-18.04 }}
         env:
           CHECK_BUILDER: "1"
         run: |
