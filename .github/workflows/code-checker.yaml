@@ -30,11 +30,11 @@ jobs:
       matrix:
         include:
         - name: Code Checker AMD64 Ubuntu 18.04
-          ubuntu: [18.04]
+          ubuntu: 18.04
           os: ubuntu-18.04
         - name: Code Checker MacOS 11
           # TODO: keep it for now to keep original ubuntu work, will refactor code in the future
-          ubuntu: [18.04]
+          ubuntu: 18.04
           os: macos-11
     env:
       UBUNTU: ${{ matrix.ubuntu }}
