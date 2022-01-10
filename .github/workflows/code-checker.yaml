@@ -39,7 +39,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cache CCache Volumes
-        if: ${{ matrix.os }} == ubuntu-18.04 
+        if: ${{ ${{ matrix.os }} == ubuntu-18.04 }}
         uses: actions/cache@v1
         with:
           path: .docker/amd64-ubuntu18.04-ccache
