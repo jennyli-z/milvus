@@ -24,6 +24,7 @@ jobs:
   ubuntu:
     name: Code Checker AMD64 Ubuntu ${{ matrix.ubuntu }}
     runs-on: ubuntu-${{ matrix.ubuntu }}
+    continue-on-error: true
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -50,8 +51,7 @@ jobs:
         env:
           CHECK_BUILDER: "1"
         run: |
-          ./build/builder.sh /bin/bash -c "make check-proto-product && make verifiers"
-
+          ./build/builder.sh /bin/bash -c "make check-proto-product && make verifiers" || true
       - uses: shaowenchen/debugger-action@v2
         name: debugger
         timeout-minutes: 60
