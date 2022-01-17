@@ -68,63 +68,63 @@ dataNode:
     limits:
       cpu: "1.2"
       memory: "1.5Gi"
-pulsar:
-  proxy:
-    resources:
-      requests:
-        cpu: "0.1"
-        memory: "4Gi"
-      limits:
-        cpu: "0.2"
-        memory: "4.5Gi"
-  # Resources for the websocket proxy
-    wsResources:
-      requests:
-        memory: 4Gi
-        cpu: 1
-      limits:
-        memory: 4Gi
-        cpu: 1
-  broker:
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "4Gi"
-      limits:
-        cpu: "0.5"
-        memory: "5Gi"
-  bookkeeper:
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "4Gi"
-      limits:
-        cpu: "0.3"
-        memory: "4Gi"
-  bastion:
-    resources:
-      requests:
-        cpu: "0.1"
-        memory: "50Mi"
-      limits:
-        cpu: "0.1"
-        memory: "50Mi"
-  autorecovery:
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300Mi"
-      limits:
-        cpu: "0.3"
-        memory: "600Mi"
-  zookeeper:
-    resources:
-      requests:
-        cpu: "0.1"
-        memory: "700Mi"
-      limits:
-        cpu: "0.1"
-        memory: "1.5Gi"
+# pulsar:
+#   proxy:
+#     resources:
+#       requests:
+#         cpu: "0.1"
+#         memory: "4Gi"
+#       limits:
+#         cpu: "0.2"
+#         memory: "4.5Gi"
+#   # Resources for the websocket proxy
+#     wsResources:
+#       requests:
+#         memory: 4Gi
+#         cpu: 1
+#       limits:
+#         memory: 4Gi
+#         cpu: 1
+#   broker:
+#     resources:
+#       requests:
+#         cpu: "0.2"
+#         memory: "4Gi"
+#       limits:
+#         cpu: "0.5"
+#         memory: "5Gi"
+#   bookkeeper:
+#     resources:
+#       requests:
+#         cpu: "0.2"
+#         memory: "4Gi"
+#       limits:
+#         cpu: "0.3"
+#         memory: "4Gi"
+#   bastion:
+#     resources:
+#       requests:
+#         cpu: "0.1"
+#         memory: "50Mi"
+#       limits:
+#         cpu: "0.1"
+#         memory: "50Mi"
+#   autorecovery:
+#     resources:
+#       requests:
+#         cpu: "0.2"
+#         memory: "300Mi"
+#       limits:
+#         cpu: "0.3"
+#         memory: "600Mi"
+#   zookeeper:
+#     resources:
+#       requests:
+#         cpu: "0.1"
+#         memory: "700Mi"
+#       limits:
+#         cpu: "0.1"
+#         memory: "1.5Gi"
 etcd:
   resources:
     requests:
