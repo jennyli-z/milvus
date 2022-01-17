@@ -149,6 +149,7 @@ pipeline {
                                     name 'TEST_LEVEL'
                                     values 'L0','L1'
                              }
+                            }
                         agent {
                                 kubernetes {
                                     label 'milvus-e2e-test-pr'
@@ -173,7 +174,7 @@ pipeline {
                                             MILVUS_HELM_NAMESPACE="milvus-ci" \
                                             MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
                                             TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                            ./ci_e2e.sh  "-n 6 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                            ./ci_e2e.sh  "-n 10 -x --tags L0 L1 --timeout ${case_timeout_seconds}"
                                             """
                                         } else {
                                         error "Error: Unsupported Milvus client: ${MILVUS_CLIENT}"
