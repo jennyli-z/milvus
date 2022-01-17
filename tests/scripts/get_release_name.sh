@@ -53,7 +53,9 @@ function milvus_ci_release_name(){
         name+="-pr"
 
     fi 
-
+    if [[ -n ${TEST_LEVEL:-} ]]; then 
+            name+="-${TEST_LEVEL}"
+    fi 
     export MILVUS_HELM_RELEASE_NAME=${name}
     echo ${name}
 }
