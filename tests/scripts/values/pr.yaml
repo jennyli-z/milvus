@@ -80,10 +80,10 @@ pulsar:
   # Resources for the websocket proxy
     wsResources:
       requests:
-        memory: 1Gi
+        memory: 4Gi
         cpu: 1
       limits:
-        memory: 1Gi
+        memory: 4Gi
         cpu: 1
   broker:
     resources:
@@ -92,7 +92,7 @@ pulsar:
         memory: "4Gi"
       limits:
         cpu: "0.5"
-        memory: "4.5Gi"
+        memory: "5Gi"
   bookkeeper:
     resources:
       requests:
