@@ -84,6 +84,7 @@ pipeline {
                         name 'MILVUS_CLIENT'
                         values 'pymilvus'
                     }
+
                 }
 
                 stages {
@@ -139,7 +140,15 @@ pipeline {
                             }
                         }
                     }
+
+                                       
                     stage('E2E Test'){
+                        matrix {
+                            axes {
+                            axis {
+                                    name 'TEST_LEVEL'
+                                    values 'L0','L1'
+                             }
                         agent {
                                 kubernetes {
                                     label 'milvus-e2e-test-pr'
@@ -173,6 +182,7 @@ pipeline {
                                 }
                             }
                         }
+                            }
 
                     }
                 }
