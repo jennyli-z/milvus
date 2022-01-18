@@ -120,10 +120,10 @@ pulsar:
   zookeeper:
     resources:
       requests:
-        cpu: "0.1"
+        cpu: "0.3"
         memory: "1Gi"
       limits:
-        cpu: "0.1"
+        cpu: "0.3"
         memory: "2Gi"
 etcd:
   resources:
@@ -137,10 +137,10 @@ minio:
   resources:
     requests:
       cpu: "0.3"
-      memory: "150Mi"
+      memory: "512Mi"
     limits:
       cpu: "0.6"
-      memory: "300Mi"
+      memory: "512Mi"
 standalone:
   resources:
     requests:
