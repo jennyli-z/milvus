@@ -1,4 +1,7 @@
 
+nodeSelector:
+  node-role.kubernetes.io/milvus-ci: milvus-ci
+
 proxy:
   resources:
     requests:
