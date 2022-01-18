@@ -34,7 +34,7 @@ pipeline {
         DISABLE_KIND = true
         HUB = 'registry.milvus.io/milvus'
         JENKINS_BUILD_ID = "${env.BUILD_ID}"
-        CI_MODE="pr"
+        CI_MODE="jenny"
     }
 
     stages {
