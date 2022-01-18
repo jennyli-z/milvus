@@ -57,7 +57,11 @@ if [[ -n "${RELEASE_NAME:-}" ]]; then
     MILVUS_HELM_RELEASE_NAME="${RELEASE_NAME}"
     # List pod list before uninstall 
     kubectl get pods -n ${MILVUS_HELM_NAMESPACE}  -o wide | grep "${MILVUS_HELM_RELEASE_NAME}-"
-    
+    crash_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep 'ago' | awk '{print $1}')
+    for crash_pod in ${crash_pods}
+    do 
+      kubectl get pod ${crash_pod} -n milvus-ci -o json | jq .status.containerStatuses
+    done
 fi
 
 # Uninstall Milvus Helm Release
