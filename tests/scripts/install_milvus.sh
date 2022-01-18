@@ -96,5 +96,12 @@ fi
 exitcode=$?
 # List pod list & pvc list before exit after helm install
 kubectl get pods -n ${MILVUS_HELM_NAMESPACE} -o wide | grep "${MILVUS_HELM_RELEASE_NAME}-"
+crash_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep CrashLoopBackOff | awk '{print $1}')
+
+for crash_pod in ${crash_pods}
+do 
+  kubectl get pod ${crash_pod} -n milvus-ci -o json | jq .status.containerStatuses
+done
+
 kubectl get pvc -n ${MILVUS_HELM_NAMESPACE} |  grep "${MILVUS_HELM_RELEASE_NAME}-" | awk '{$3=null;print $0}'
 exit ${exitcode}
