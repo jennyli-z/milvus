@@ -24,7 +24,7 @@ set -u
 set -x
 function milvus_ci_release_name(){
     # Rules for helm release name 
-    local name="jenny"
+    local name="jennyb"
     if [[ "${MILVUS_SERVER_TYPE:-}" == "distributed" ]]; then
         # Distributed mode
        name+="d"
