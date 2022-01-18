@@ -72,6 +72,8 @@ dataNode:
       cpu: "1.2"
       memory: "1.5Gi"
 pulsar:
+  nodeSelector:
+    node-role.kubernetes.io/milvus-ci: milvus-ci
   proxy:
     resources:
       requests:
