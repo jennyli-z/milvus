@@ -9,7 +9,7 @@ pipeline {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
         buildDiscarder logRotator(artifactDaysToKeepStr: '30')
-        parallelsAlwaysFailFast()
+        // parallelsAlwaysFailFast()
         preserveStashes(buildCount: 5)
 
     }
@@ -213,7 +213,7 @@ pipeline {
                             body: '$DEFAULT_CONTENT',
                             recipientProviders: [developers(), culprits()],
                             replyTo: '$DEFAULT_REPLYTO',
-                            to: "${authorEmail},devops@zilliz.com"
+                            to: "jing.li@zilliz.com"
                         }
                     }
                 }
