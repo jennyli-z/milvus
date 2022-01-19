@@ -39,39 +39,39 @@ pipeline {
     }
 
     stages {
-        stage ('Build'){
-            steps {
-                container('main') {
-                    dir ('build'){
-                            sh './set_docker_mirror.sh'
-                    }
-                    dir ('tests/scripts') {
-                        script {
-                            sh 'printenv'
-                            def date = sh(returnStdout: true, script: 'date +%Y%m%d').trim()
-                            def gitShortCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()    
-                            imageTag="${env.BRANCH_NAME}-${date}-${gitShortCommit}"
-                            withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
-                                sh """
-                                TAG="${imageTag}" \
-                                ./e2e-k8s.sh \
-                                --skip-export-logs \
-                                --skip-install \
-                                --skip-cleanup \
-                                --skip-setup \
-                                --skip-test
-                                """
+        // stage ('Build'){
+        //     steps {
+        //         container('main') {
+        //             dir ('build'){
+        //                     sh './set_docker_mirror.sh'
+        //             }
+        //             dir ('tests/scripts') {
+        //                 script {
+        //                     sh 'printenv'
+        //                     def date = sh(returnStdout: true, script: 'date +%Y%m%d').trim()
+        //                     def gitShortCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()    
+        //                     imageTag="${env.BRANCH_NAME}-${date}-${gitShortCommit}"
+        //                     withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
+        //                         sh """
+        //                         TAG="${imageTag}" \
+        //                         ./e2e-k8s.sh \
+        //                         --skip-export-logs \
+        //                         --skip-install \
+        //                         --skip-cleanup \
+        //                         --skip-setup \
+        //                         --skip-test
+        //                         """
 
-                                // stash imageTag info for rebuild install & E2E Test only
-                                sh "echo ${imageTag} > imageTag.txt"
-                                stash includes: 'imageTag.txt', name: 'imageTag'
+        //                         // stash imageTag info for rebuild install & E2E Test only
+        //                         sh "echo ${imageTag} > imageTag.txt"
+        //                         stash includes: 'imageTag.txt', name: 'imageTag'
 
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
 
         stage('Install & E2E Test') {
@@ -100,17 +100,19 @@ pipeline {
                                         }
 
                                         if ("${MILVUS_CLIENT}" == "pymilvus") {
-                                            if ("${imageTag}"==''){
-                                                dir ("imageTag"){
-                                                    try{
-                                                        unstash 'imageTag'
-                                                        imageTag=sh(returnStdout: true, script: 'cat imageTag.txt | tr -d \'\n\r\'')
-                                                    }catch(e){
-                                                        print "No Image Tag info remained ,please rerun build to build new image."
-                                                        exit 1
-                                                    }
-                                                }
-                                            }
+
+                                            imageTag='jenny-charts-version-20220119-7186779fd'
+                                            // if ("${imageTag}"==''){
+                                            //     dir ("imageTag"){
+                                            //         try{
+                                            //             unstash 'imageTag'
+                                            //             imageTag=sh(returnStdout: true, script: 'cat imageTag.txt | tr -d \'\n\r\'')
+                                            //         }catch(e){
+                                            //             print "No Image Tag info remained ,please rerun build to build new image."
+                                            //             exit 1
+                                            //         }
+                                            //     }
+                                            // }
                                             withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
                                                 sh """
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
