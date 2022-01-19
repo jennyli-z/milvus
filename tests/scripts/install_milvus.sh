@@ -60,10 +60,11 @@ fi
 #   git clone --depth=1 -b "${MILVUS_HELM_BRANCH:-master}" "${MILVUS_HELM_REPO}" "${TMP_DIR}"
 #   MILVUS_HELM_CHART_PATH="${TMP_DIR}/charts/milvus"
 # fi
-MILVUS_CHART_VERSION
+
+# Use helm repo to install milvus charts 
 helm repo add milvus https://milvus-io.github.io/milvus-helm/
 helm repo update
-MILVUS_HELM_CHART_PATH="milvus/milvus --version ${MILVUS_CHART_VERSION}"
+MILVUS_HELM_CHART_PATH="milvus/milvus"
 
 # Create namespace when it does not exist
 kubectl create namespace "${MILVUS_HELM_NAMESPACE}" > /dev/null 2>&1 || true
