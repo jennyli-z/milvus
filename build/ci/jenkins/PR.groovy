@@ -134,7 +134,7 @@ pipeline {
                                                 --set minio.persistence.storageClass=local-path \
                                                 --set etcd.metrics.enabled=false \
                                                 --set etcd.metrics.podMonitor.enabled=false \
-                                                --set etcd.nodeSelector.disk=fast \
+                
                                                 --set metrics.serviceMonitor.enabled=true \
                                                 --version ${chart_version} \
                                                 -f values/pr.yaml" 
