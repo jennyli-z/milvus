@@ -38,7 +38,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = "f0aacc8e-33f2-458a-ba9e-2c44f431b4d2"
         TARGET_REPO = "milvusdb"
         // CI_DOCKER_CREDENTIAL_ID = "ci-docker-registry"
-        MILVUS_HELM_NAMESPACE = "milvus-ci"
+        MILVUS_HELM_NAMESPACE = "chaos-testing"
         DISABLE_KIND = true
         HUB = 'harbor.zilliz.cc/milvus-test'
         JENKINS_BUILD_ID = "${env.BUILD_ID}"
