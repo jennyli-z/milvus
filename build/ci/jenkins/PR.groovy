@@ -122,7 +122,7 @@ pipeline {
                                             // withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
                                                 sh """
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
-                                                TAG=${imageTag}\
+                                                TAG=${image_tag}\
                                                 ./e2e-k8s.sh \
                                                 --skip-export-logs \
                                                 --skip-cleanup \
