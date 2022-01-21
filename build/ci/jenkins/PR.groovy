@@ -132,8 +132,8 @@ pipeline {
                                                 --skip-build-image \
                                                 --install-extra-arg "--set etcd.persistence.storageClass=local-path \
                                                 --set minio.persistence.storageClass=local-path \
-                                                --set etcd.metrics.enabled=true \
-                                                --set etcd.metrics.podMonitor.enabled=true \
+                                                --set etcd.metrics.enabled=false \
+                                                --set etcd.metrics.podMonitor.enabled=false \
                                                 --set etcd.nodeSelector.disk=fast \
                                                 --set metrics.serviceMonitor.enabled=true \
                                                 --version ${chart_version} \
