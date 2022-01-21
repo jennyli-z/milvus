@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: milvus-e2e
-  namespace: jenkins
+  namespace: chaos-testing
 spec:
   enableServiceLinks: false
   containers:
