@@ -30,7 +30,7 @@ pipeline {
         ARTIFACTS = "${env.WORKSPACE}/_artifacts"
         DOCKER_CREDENTIALS_ID = "f0aacc8e-33f2-458a-ba9e-2c44f431b4d2"
         TARGET_REPO = "milvusdb"
-        CI_DOCKER_CREDENTIAL_ID = "ci-docker-registry"
+        // CI_DOCKER_CREDENTIAL_ID = "ci-docker-registry"
         MILVUS_HELM_NAMESPACE = "milvus-ci"
         DISABLE_KIND = true
         HUB = 'harbor.zilliz.cc/milvus-test'
@@ -93,7 +93,7 @@ pipeline {
                             container('main') {
                                 dir ('tests/scripts') {
                                     script {
-                                        sh 'printenv'
+                                        // sh 'printenv'
                                         def clusterEnabled = "false"
                                         if ("${MILVUS_SERVER_TYPE}" == 'distributed') {
                                             clusterEnabled = "true"
@@ -112,7 +112,7 @@ pipeline {
                                             //         }
                                             //     }
                                             // }
-                                            withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
+                                            // withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
                                                 sh """
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
                                                 TAG=${imageTag}\
@@ -132,7 +132,7 @@ pipeline {
                                                 --version ${chart_version} \
                                                 -f values/pr.yaml" 
                                                 """
-                                            }
+                                            // }
                                         } else {
                                             error "Error: Unsupported Milvus client: ${MILVUS_CLIENT}"
                                         }
