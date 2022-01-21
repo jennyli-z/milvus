@@ -40,7 +40,7 @@ pipeline {
         // CI_DOCKER_CREDENTIAL_ID = "ci-docker-registry"
         MILVUS_HELM_NAMESPACE = "chaos-testing"
         DISABLE_KIND = true
-        HUB = 'harbor.zilliz.cc/milvus-test'
+        HUB = 'harbor.zilliz.cc/milvus'
         JENKINS_BUILD_ID = "${env.BUILD_ID}"
         CI_MODE="pr"
     }
