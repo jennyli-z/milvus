@@ -58,14 +58,14 @@ if [[ -n "${RELEASE_NAME:-}" ]]; then
     # List pod list before uninstall 
     kubectl get pods -n ${MILVUS_HELM_NAMESPACE}  -o wide | grep "${MILVUS_HELM_RELEASE_NAME}-"
     # Show restart pods last terminated reason
-    restart_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep "${MILVUS_HELM_RELEASE_NAME}-" | grep 'ago)' | awk '{print $1}')
+    # restart_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep "${MILVUS_HELM_RELEASE_NAME}-" | grep 'ago)' | awk '{print $1}')
    
-    for restart_pod in ${restart_pods}
-    do 
-      reason=$(kubectl get pod ${restart_pod} -n milvus-ci -o json | jq .status.containerStatuses[0].lastState.terminated.reason )
-      restart_count=$(kubectl get pod ${restart_pod} -n milvus-ci -o json | jq .status.containerStatuses[0].restartCount )
-      echo "${restart_pod} restarts ${restart_count}, last terminateed reason is ${reason}"
-    done
+    # for restart_pod in ${restart_pods}
+    # do 
+    #   reason=$(kubectl get pod ${restart_pod} -n milvus-ci -o json | jq .status.containerStatuses[0].lastState.terminated.reason )
+    #   restart_count=$(kubectl get pod ${restart_pod} -n milvus-ci -o json | jq .status.containerStatuses[0].restartCount )
+    #   echo "${restart_pod} restarts ${restart_count}, last terminateed reason is ${reason}"
+    # done
     
 fi
 mkdir ${MILVUS_HELM_RELEASE_NAME}
@@ -80,8 +80,8 @@ done
 # Do not exit with error when release not found so that the script can also be used to clean up related pvc even helm release has been uninstalled already
 # helm uninstall -n "${MILVUS_HELM_NAMESPACE}" "${MILVUS_HELM_RELEASE_NAME}" || true
 
-MILVUS_LABELS1="app.kubernetes.io/instance=${MILVUS_HELM_RELEASE_NAME}"
-MILVUS_LABELS2="release=${MILVUS_HELM_RELEASE_NAME}"
+# MILVUS_LABELS1="app.kubernetes.io/instance=${MILVUS_HELM_RELEASE_NAME}"
+# MILVUS_LABELS2="release=${MILVUS_HELM_RELEASE_NAME}"
 
 # Clean up pvc
 # kubectl delete pvc --wait -n "${MILVUS_HELM_NAMESPACE}" $(kubectl get pvc -n "${MILVUS_HELM_NAMESPACE}" -l "${MILVUS_LABELS1}" -o jsonpath='{range.items[*]}{.metadata.name} ') || true
