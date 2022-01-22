@@ -47,9 +47,9 @@ indexNode:
     requests:
       cpu: "2"
       memory: "500Mi"
-    limits:
-      cpu: "2"
-      memory: "800Mi"
+    # limits:
+    #   cpu: "2"
+    #   memory: "800Mi"
 
 dataCoordinator:
   resources:
