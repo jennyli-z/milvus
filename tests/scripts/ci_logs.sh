@@ -93,7 +93,7 @@ done
 #   mv  ${log_file} ${RELEASE_LOG_DIR}/`echo ${file_name} | sed 's/jenkins.var.log.containers.//g' `
 # done 
 
-tar -zcvf ${ARTIFACTS_NAME:-artifacts}.tar.gz ci-logs/*
+tar -zcvf ${ARTIFACTS_NAME:-artifacts}.tar.gz ${MILVUS_HELM_RELEASE_NAME}/*
 # rm -rf ${RELEASE_LOG_DIR}
 
 # remain_log_files=$(find ${LOG_DIR} -type f  -name "*${RELEASE_NAME}*")
