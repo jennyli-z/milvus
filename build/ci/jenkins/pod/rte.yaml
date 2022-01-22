@@ -3,10 +3,10 @@ kind: Pod
 metadata:
   labels:
     app: milvus-e2e
-  namespace: chaos-testing
+  namespace: jenkins
 spec:
-  serviceAccountName: ci-test
-  serviceAccount: ci-test
+  # serviceAccountName: ci-test
+  # serviceAccount: ci-test
   enableServiceLinks: false
   containers:
   - name: main
@@ -40,8 +40,8 @@ spec:
     - mountPath: /mnt/disk/.docker
       name: build-cache
       subPath: docker-volume
-    # - mountPath: /ci-logs
-    #   name: ci-logs  
+    - mountPath: /ci-logs
+      name: ci-logs  
   - name: pytest
     image: milvusdb/pytest:20220118-3eb5cc4
     resources:
@@ -71,7 +71,7 @@ spec:
       path: /sys/fs/cgroup
       type: Directory
     name: cgroup
-  # - name: ci-logs
-  #   nfs:
-  #     path: /volume1/ci-logs
-  #     server: 192.168.1.126
+  - name: ci-logs
+    nfs:
+      path: /volume1/ci-logs
+      server: 192.168.1.126
