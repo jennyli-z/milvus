@@ -19,7 +19,7 @@
 # Exit immediately for non zero status
 set -e
 # Check unset variables
-set -u
+# set -u
 # Print commands
 set -x
 
@@ -80,7 +80,7 @@ Use \"$0  --help\" for more information about a given command.
 done
 
 # LOG_DIR=${LOG_DIR:-/ci-logs/}
-# RELEASE_NAME=${RELEASE_NAME:-milvus-testing}
+RELEASE_NAME=${RELEASE_NAME:-milvus-testing}
 # RELEASE_LOG_DIR=/${RELEASE_NAME}
 # if [[ ! -d ${RELEASE_LOG_DIR} ]] ;then 
 #   mkdir -p ${RELEASE_LOG_DIR}
@@ -93,7 +93,7 @@ done
 #   mv  ${log_file} ${RELEASE_LOG_DIR}/`echo ${file_name} | sed 's/jenkins.var.log.containers.//g' `
 # done 
 
-tar -zcvf ${ARTIFACTS_NAME:-artifacts}.tar.gz ${MILVUS_HELM_RELEASE_NAME}/*
+tar -zcvf ${ARTIFACTS_NAME:-artifacts}.tar.gz ${RELEASE_NAME}/*
 # rm -rf ${RELEASE_LOG_DIR}
 
 # remain_log_files=$(find ${LOG_DIR} -type f  -name "*${RELEASE_NAME}*")
