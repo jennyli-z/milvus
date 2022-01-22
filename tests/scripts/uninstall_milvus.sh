@@ -72,7 +72,7 @@ mkdir ${MILVUS_HELM_RELEASE_NAME}
 all_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep "${MILVUS_HELM_RELEASE_NAME}-"  | awk '{print $1}')
 for pod_name in ${all_pods}
 do
-  kubectl logs ${pod_name} -n ${MILVUS_HELM_NAMESPACE} > ${MILVUS_HELM_RELEASE_NAME}/${pod_name}.log
+  kubectl logs ${pod_name} -n ${MILVUS_HELM_NAMESPACE} --all-containers=true > ${MILVUS_HELM_RELEASE_NAME}/${pod_name}.log
 done
 
 
