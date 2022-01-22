@@ -18,7 +18,7 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'PR-15305-20220121-1fa9edbd1'
+            defaultValue: 'master-20220121-1cd2363'
         ) 
     }
     agent {
