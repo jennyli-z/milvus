@@ -20,6 +20,11 @@ pipeline {
             name: 'image_tag',
             defaultValue: 'master-20220121-1cd2363'
         ) 
+        string(
+            description: 'Fail & stop',
+            name: 'stop',
+            defaultValue: '-x'
+        ) 
     }
     agent {
             kubernetes {
@@ -173,7 +178,7 @@ pipeline {
                                             MILVUS_HELM_NAMESPACE="chaos-testing" \
                                             MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
                                             TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                            ./ci_e2e.sh  "-n 6  --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                            ./ci_e2e.sh  "-n 6 ${stop} --tags L0 L1 --timeout ${case_timeout_seconds}"
                                             """
                             
                                         } else {
