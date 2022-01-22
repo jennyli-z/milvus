@@ -68,8 +68,12 @@ if [[ -n "${RELEASE_NAME:-}" ]]; then
     done
     
 fi
-
-
+mkdir ci-logs
+all_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep "${MILVUS_HELM_RELEASE_NAME}-")
+for pod_name in ${all_pods}
+do
+  kubectl logs ${pod_name} -n ${MILVUS_HELM_NAMESPACE} > ci-logs/${pod_name}.log
+done
 
 
 # Uninstall Milvus Helm Release
