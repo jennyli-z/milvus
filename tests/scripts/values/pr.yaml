@@ -45,11 +45,11 @@ indexCoordinator:
 indexNode:
   resources:
     requests:
-      cpu: "1"
+      cpu: "4"
       memory: "500Mi"
     limits:
-      cpu: "2"
-    #   memory: "800Mi"
+      cpu: "4"
+      memory: "1.5Gi"
 
 dataCoordinator:
   resources:
