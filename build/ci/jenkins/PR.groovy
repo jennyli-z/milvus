@@ -4,8 +4,14 @@ int total_timeout_minutes = 120
 int e2e_timeout_seconds = 70 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
+String cron_timezone = 'TZ=Asia/Shanghai'
+String cron_string = BRANCH_NAME == "qa-ci-cron" ? "00 21 * * * " : ""
 def chart_version='2.4.25'
 pipeline {
+    triggers {
+        cron """${cron_timezone}
+            ${cron_string}"""
+    }
     options {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
@@ -18,7 +24,7 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'master-20220121-1cd2363'
+            defaultValue: 'master-20220124-3987574'
         ) 
         string(
             description: 'Fail & stop',
