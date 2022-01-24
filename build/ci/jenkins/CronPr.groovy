@@ -5,7 +5,7 @@ int e2e_timeout_seconds = 70 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
-String cron_string =  "H */1 * * * " 
+String cron_string =  "H */2 * * * " 
 def chart_version='2.4.25'
 pipeline {
     triggers {
