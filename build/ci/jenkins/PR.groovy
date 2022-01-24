@@ -18,7 +18,7 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'master-20220121-1cd2363'
+            defaultValue: 'master-20220124-3a02430'
         ) 
         string(
             description: 'Fail & stop',
