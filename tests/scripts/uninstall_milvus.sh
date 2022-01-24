@@ -73,6 +73,7 @@ all_pods=$(kubectl get pods -n ${MILVUS_HELM_NAMESPACE} | grep "${MILVUS_HELM_RE
 for pod_name in ${all_pods}
 do
   kubectl logs ${pod_name} -n ${MILVUS_HELM_NAMESPACE} --all-containers=true > ${MILVUS_HELM_RELEASE_NAME}/${pod_name}.log
+  kubectl logs ${pod_name} -n ${MILVUS_HELM_NAMESPACE} --all-containers=true --previous=true > ${MILVUS_HELM_RELEASE_NAME}/${pod_name}_previous.log
 done
 
 
