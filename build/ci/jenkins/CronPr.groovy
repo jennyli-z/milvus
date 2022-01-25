@@ -5,13 +5,13 @@ int e2e_timeout_seconds = 120 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
-// String cron_string =  "H */2 * * * " 
+String cron_string =  "H */1 * * * " 
 def chart_version='2.4.25'
 pipeline {
-    // triggers {
-    //     cron """${cron_timezone}
-    //         ${cron_string}"""
-    // }
+    triggers {
+        cron """${cron_timezone}
+            ${cron_string}"""
+    }
     options {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
