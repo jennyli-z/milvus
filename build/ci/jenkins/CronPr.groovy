@@ -8,10 +8,10 @@ String cron_timezone = 'TZ=Asia/Shanghai'
 String cron_string =  "H */1 * * * " 
 def chart_version='2.4.25'
 pipeline {
-    triggers {
-        cron """${cron_timezone}
-            ${cron_string}"""
-    }
+    // triggers {
+    //     cron """${cron_timezone}
+    //         ${cron_string}"""
+    // }
     options {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
@@ -24,7 +24,7 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'master-20220124-3a02430'
+            defaultValue: 'master-20220125-8ab9d76'
         ) 
         string(
             description: 'Fail & stop',
