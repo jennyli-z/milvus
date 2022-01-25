@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
-int total_timeout_minutes = 120
-int e2e_timeout_seconds = 70 * 60
+int total_timeout_minutes = 180
+int e2e_timeout_seconds = 120 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
