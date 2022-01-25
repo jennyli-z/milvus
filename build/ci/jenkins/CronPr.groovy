@@ -146,7 +146,6 @@ pipeline {
                                                 --set etcd.metrics.podMonitor.enabled=false \
                 
                                                 --set metrics.serviceMonitor.enabled=true \
-                                                --version ${chart_version} \
                                                 -f values/pr.yaml" 
                                                 """
                                             // }
