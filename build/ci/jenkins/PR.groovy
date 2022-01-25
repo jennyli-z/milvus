@@ -219,7 +219,7 @@ pipeline {
         }
     }
     post{
-        unsuccessful {
+        always {
                 container('jnlp') {
                     dir ('tests/scripts') {
                         script {
