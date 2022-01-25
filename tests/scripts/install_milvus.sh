@@ -22,8 +22,8 @@
 # Print commands
 set -x
 
-
-MILVUS_HELM_REPO="https://github.com/milvus-io/milvus-helm.git"
+MILVUS_HELM_REPO="https://github.com/LoveEachDay/milvus-helm.git"
+# MILVUS_HELM_REPO="https://github.com/milvus-io/milvus-helm.git"
 MILVUS_HELM_RELEASE_NAME="${MILVUS_HELM_RELEASE_NAME:-milvus-testing}"
 MILVUS_CLUSTER_ENABLED="${MILVUS_CLUSTER_ENABLED:-false}"
 MILVUS_IMAGE_REPO="${MILVUS_IMAGE_REPO:-milvusdb/milvus}"
