@@ -5,7 +5,7 @@ int e2e_timeout_seconds = 70 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
-String cron_string =  "H */1 * * * " 
+String cron_string =  "H */2 * * * " 
 def chart_version='2.4.25'
 pipeline {
     triggers {
@@ -183,7 +183,7 @@ pipeline {
                                             MILVUS_HELM_NAMESPACE="chaos-testing" \
                                             MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
                                             TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                            ./ci_e2e.sh  "-n 6 ${stop} --tags L0 L1 --timeout ${case_timeout_seconds}"
+                                            ./ci_e2e.sh  "-n 6 ${stop} --tags L0 L1 L2 --timeout ${case_timeout_seconds}"
                                             """
                             
                                         } else {
