@@ -24,7 +24,7 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'master-20220125-8ab9d76'
+            defaultValue: 'master-20220125-6336e232'
         ) 
         string(
             description: 'Fail & stop',
@@ -146,6 +146,7 @@ pipeline {
                                                 --set etcd.metrics.podMonitor.enabled=false \
                 
                                                 --set metrics.serviceMonitor.enabled=true \
+                                                 --version ${chart_version} \
                                                 -f values/pr.yaml" 
                                                 """
                                             // }
