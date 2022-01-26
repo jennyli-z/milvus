@@ -13,7 +13,7 @@ pipeline {
     //         ${cron_string}"""
     // }
     options {
-        timestamps()
+        // timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
         buildDiscarder logRotator(artifactDaysToKeepStr: '30')
         // parallelsAlwaysFailFast()
