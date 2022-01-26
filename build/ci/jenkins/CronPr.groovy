@@ -35,7 +35,7 @@ pipeline {
     agent {
             kubernetes {
                 label 'milvus-e2e-test-pipeline'
-                inheritFrom 'default'
+                // inheritFrom 'default'
                 defaultContainer 'main'
                 yamlFile 'build/ci/jenkins/pod/rte.yaml'
                 customWorkspace '/home/jenkins/agent/workspace'
