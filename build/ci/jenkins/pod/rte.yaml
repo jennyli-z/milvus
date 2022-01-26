@@ -3,7 +3,10 @@ kind: Pod
 metadata:
   labels:
     app: milvus-e2e
+  namespace: chaos-testing
 spec:
+  serviceAccountName: ci-test
+  serviceAccount: ci-test
   enableServiceLinks: false
   containers:
   - name: main
