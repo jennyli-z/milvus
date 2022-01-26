@@ -3,6 +3,7 @@ name: Code Checker
 
 # This workflow is triggered on pushes or pull request to the repository.
 on:
+  workflow_dispatch:
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
@@ -61,9 +62,6 @@ jobs:
       - name: Code Check
         if: ${{  matrix.os == 'macos-11' }}
         run: |
-          bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-          source ~/.gvm/scripts/gvm
-          gvm install go1.17.2
-          gvm use go1.17.2
-          brew install boost libomp ninja tbb
+          ./scripts/install_deps_ci.sh
+          go version
           make check-proto-product && make verifiers
