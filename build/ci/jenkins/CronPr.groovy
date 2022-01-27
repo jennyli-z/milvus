@@ -229,16 +229,15 @@ pipeline {
         }
     }
     post{
-        unsuccessful {
+        always {
                 container('jnlp') {
                     dir ('tests/scripts') {
                         script {
-                            def authorEmail = sh(returnStdout: true, script: './get_author_email.sh ')
-                            emailext subject: '$DEFAULT_SUBJECT',
+                            emailext subject: 'Test for Pulsar 2.8.2 $DEFAULT_SUBJECT',
                             body: '$DEFAULT_CONTENT',
                             recipientProviders: [developers(), culprits()],
                             replyTo: '$DEFAULT_REPLYTO',
-                            to: "jing.li@zilliz.com"
+                            to: "jing.li@zilliz.com,yanliang.qiao@zilliz.com,jie.zeng@zilliz.com"
                         }
                     }
                 }
