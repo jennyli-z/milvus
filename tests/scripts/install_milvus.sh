@@ -68,10 +68,12 @@ fi
 #   MILVUS_HELM_CHART_PATH="${TMP_DIR}/charts/milvus"
 # fi
 
-Use helm repo to install milvus charts 
-helm repo add milvus https://milvus-io.github.io/milvus-helm/
+#Use helm repo to install milvus charts 
+#helm repo add milvus https://milvus-io.github.io/milvus-helm/
+helm repo add museum https://charts-dev.zilliz.cc
 helm repo update
-MILVUS_HELM_CHART_PATH="milvus/milvus"
+#MILVUS_HELM_CHART_PATH="milvus/milvus"
+MILVUS_HELM_CHART_PATH="museum/milvus"
 
 # Create namespace when it does not exist
 kubectl create namespace "${MILVUS_HELM_NAMESPACE}" > /dev/null 2>&1 || true

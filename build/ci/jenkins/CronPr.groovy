@@ -5,13 +5,13 @@ int e2e_timeout_seconds = 120 * 60
 // def imageTag=''
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
-String cron_string =  "H */1 * * * " 
-def chart_version='2.4.25'
+String cron_string =  "H */12 * * * " 
+def chart_version='2.5.0'
 pipeline {
-    // triggers {
-    //     cron """${cron_timezone}
-    //         ${cron_string}"""
-    // }
+    triggers {
+        cron """${cron_timezone}
+            ${cron_string}"""
+    }
     options {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
@@ -24,12 +24,17 @@ pipeline {
         string(
             description: 'Image Tag',
             name: 'image_tag',
-            defaultValue: 'master-20220125-6336e232'
+            defaultValue: 'v2.0.0'
         ) 
         string(
             description: 'Fail & stop',
             name: 'stop',
             defaultValue: '-x'
+        ) 
+        string(
+            description: 'Test Level',
+            name: 'test_level',
+            defaultValue: 'L0 L1 L2'
         ) 
     }
     agent {
@@ -183,7 +188,7 @@ pipeline {
                                             MILVUS_HELM_NAMESPACE="chaos-testing" \
                                             MILVUS_CLUSTER_ENABLED="${clusterEnabled}" \
                                             TEST_TIMEOUT="${e2e_timeout_seconds}" \
-                                            ./ci_e2e.sh  "-n 6 ${stop} --tags L0 L1 L2 --timeout ${case_timeout_seconds}"
+                                            ./ci_e2e.sh  "-n 6 ${stop} --tags ${test_level} --timeout ${case_timeout_seconds}"
                                             """
                             
                                         } else {
