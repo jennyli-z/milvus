@@ -6,7 +6,7 @@ int e2e_timeout_seconds = 120 * 60
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
 String cron_string =  "H 11 * * * " 
-def chart_version='3.0.1'
+def chart_version='2.5.0'
 pipeline {
     triggers {
         cron """${cron_timezone}
