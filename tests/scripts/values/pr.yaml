@@ -1,4 +1,10 @@
 
+metrics:
+  serviceMonitor:
+    enabled: true
+    interval: "5s"
+    scrapeTimeout: "5s"
+
 proxy:
   resources:
     requests:

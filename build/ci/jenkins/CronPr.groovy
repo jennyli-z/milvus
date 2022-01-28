@@ -6,7 +6,7 @@ int e2e_timeout_seconds = 120 * 60
 int case_timeout_seconds = 10 * 60
 String cron_timezone = 'TZ=Asia/Shanghai'
 String cron_string =  "H 11 * * * " 
-def chart_version='2.5.0'
+def chart_version='3.0.1'
 pipeline {
     triggers {
         cron """${cron_timezone}
@@ -57,7 +57,7 @@ pipeline {
         DISABLE_KIND = true
         HUB = 'harbor.zilliz.cc/milvus'
         JENKINS_BUILD_ID = "${env.BUILD_ID}"
-        CI_MODE="pr"
+        CI_MODE="nightly"
     }
 
     stages {
@@ -198,8 +198,17 @@ pipeline {
                                 }
                             }
                         }
-
+                 post{
+                    always {
+                        container('pytest'){
+                            dir("${env.ARTIFACTS}") {
+                                    sh "tar -zcvf artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz /tmp/ci_logs/test --remove-files || true"
+                                    archiveArtifacts artifacts: "artifacts-${PROJECT_NAME}-${MILVUS_SERVER_TYPE}-${MILVUS_CLIENT}-pytest-logs.tar.gz ", allowEmptyArchive: true
+                            }
+                        }
                     }
+                    }
+                 }
                 }
                 post{
                     always {
