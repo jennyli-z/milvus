@@ -8,10 +8,10 @@ String cron_timezone = 'TZ=Asia/Shanghai'
 String cron_string = BRANCH_NAME == "qa-ci-cron" ? "00 21 * * * " : ""
 def chart_version='2.4.25'
 pipeline {
-    triggers {
-        cron """${cron_timezone}
-            ${cron_string}"""
-    }
+    // triggers {
+    //     cron """${cron_timezone}
+    //         ${cron_string}"""
+    // }
     options {
         timestamps()
         timeout(time: total_timeout_minutes, unit: 'MINUTES')
