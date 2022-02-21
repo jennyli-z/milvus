@@ -56,6 +56,13 @@ jobs:
           key: macos-11-ccache-${{ hashFiles('internal/core/**') }}
           restore-keys: macos-11-ccache-
       - name: Cache Go Mod Volumes
+        if: ${{  matrix.os == 'macos-11' }}
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: macos-11-go-mod-${{ hashFiles('**/go.sum') }}
+          restore-keys: macos-11-go-mod-
+      - name: Cache Go Mod Volumes
         if: ${{  matrix.os == 'ubuntu-18.04' }}
         uses: actions/cache@v1
         with:
