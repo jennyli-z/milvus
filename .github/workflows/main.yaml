@@ -58,6 +58,12 @@ jobs:
           path: .docker/amd64-ubuntu${{ matrix.ubuntu }}-go-mod
           key: ubuntu${{ matrix.ubuntu }}-go-mod-${{ hashFiles('**/go.sum') }}
           restore-keys: ubuntu${{ matrix.ubuntu }}-go-mod-
+      - name: Cache Third Party
+        if: ${{  matrix.os == 'ubuntu-18.04' }}
+        uses: actions/cache@v1
+        with:
+          path: .docker/thirdparty
+          key: ubuntu18.04-thirdparty-${{ hashFiles('internal/core/**') }}
       - name: Start Service
         shell: bash
         run: |
