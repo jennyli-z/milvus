@@ -164,9 +164,7 @@ pull_request_rules:
     conditions:
       - base=master
       - -title~=\[skip e2e\]
-      - and:
-        - files~=^(?!internal\/.*_test\.go).*$
-        - files~=^(?!.*\.(md)).*$ 
+      - files~=^(?!(internal\/.*_test\.go|.*\.md)).*$
       - "status-success!=continuous-integration/jenkins/pr-merge"        
     actions:
       label:
