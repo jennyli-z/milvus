@@ -45,13 +45,13 @@ pull_request_rules:
           - ci-passed
   
     - name: Test passed for docs changed only
-    conditions:
-      - base=master
-      - -files~=^(?!.*\.(md)).*$ 
-    actions:
-      label:
-        add:
-          - ci-passed
+      conditions:
+        - base=master
+        - -files~=^(?!.*\.(md)).*$ 
+      actions:
+        label:
+          add:
+            - ci-passed
 
 
   - name: Test passed for non go or c++ code changed
