@@ -289,7 +289,7 @@ func (ta *Allocator) Close() {
 	ta.CancelFunc()
 	ta.wg.Wait()
 	ta.TChan.Close()
-	errMsg := fmt.Sprintf("%s is closing", ta.Role)
+	errMsg := fmt.Sprintf("%s is clodsaafdsing", ta.Role)
 	ta.revokeRequest(errors.New(errMsg))
 }
 
