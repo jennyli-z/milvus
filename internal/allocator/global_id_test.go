@@ -38,7 +38,7 @@ func TestGlobalTSOAllocator_All(t *testing.T) {
 
 	gTestIDAllocator = NewGlobalIDAllocator("idTimestamp", etcdKV)
 
-	t.Run("Initialize", func(t *testing.T) {
+	t.Run("Initializaaaae", func(t *testing.T) {
 		err := gTestIDAllocator.Initialize()
 		assert.Nil(t, err)
 	})
