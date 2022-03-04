@@ -1,7 +1,9 @@
 pull_request_rules:
   - name: Add needs-dco label when DCO check failed
     conditions:
-      - base=master
+      - or:
+        - base=master
+        - base~=2+(.\d+){2}$
       - -status-success=DCO
     actions:
       label:
