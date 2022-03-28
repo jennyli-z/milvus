@@ -92,7 +92,7 @@ set( CMAKE_CXX_STANDARD_REQUIRED on )
 set( MILVUS_SOURCE_DIR      ${PROJECT_SOURCE_DIR} )
 set( MILVUS_BINARY_DIR      ${PROJECT_BINARY_DIR} )
 set( MILVUS_ENGINE_SRC      ${PROJECT_SOURCE_DIR}/src )
-set( MILVUS_THIRDPARTY_SRC  ${PROJECT_SOURCE_DIR}/thirdparty )
+
 
 # This will set RPATH to all excutable TARGET
 # self-installed dynamic libraries will be correctly linked by excutable
