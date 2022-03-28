@@ -62,7 +62,7 @@ fi
 #   MILVUS_HELM_CHART_PATH="${TMP_DIR}/charts/milvus"
 # fi
 
-Use helm repo to install milvus charts 
+# Use helm repo to install milvus charts 
 helm repo add milvus https://milvus-io.github.io/milvus-helm/
 helm repo update
 MILVUS_HELM_CHART_PATH="milvus/milvus"
