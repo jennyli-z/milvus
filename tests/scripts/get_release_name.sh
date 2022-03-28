@@ -28,7 +28,7 @@ function milvus_ci_release_name(){
     if [[ "${MILVUS_SERVER_TYPE:-}" == "distributed-kafka" ]]; then
         # Distributed mode with kafka
        name+="dk"
-    else if [[ "${MILVUS_SERVER_TYPE:-}" == "distributed-pulsar" ]]; then
+    elif [[ "${MILVUS_SERVER_TYPE:-}" == "distributed-pulsar" ]]; then
        # Distributed mode with pulsar
        name+="dp"
     else 
