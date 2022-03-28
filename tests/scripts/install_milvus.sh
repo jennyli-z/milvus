@@ -31,7 +31,7 @@ MILVUS_IMAGE_TAG="${MILVUS_IMAGE_TAG:-latest}"
 MILVUS_HELM_NAMESPACE="${MILVUS_HELM_NAMESPACE:-default}"
 # Increase timeout from 500 to 800 because pulsar has one more node now
 MILVUS_INSTALL_TIMEOUT="${MILVUS_INSTALL_TIMEOUT:-800s}"
-MQ_MODE="${MQ_MODE:-puslar}"
+MQ_MODE="${MQ_MODE:-pulsar}"
 
 # Delete any previous Milvus cluster
 echo "Deleting previous Milvus cluster with name=${MILVUS_HELM_RELEASE_NAME}"

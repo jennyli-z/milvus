@@ -119,6 +119,7 @@ pipeline {
                                             // }
                                             withCredentials([usernamePassword(credentialsId: "${env.CI_DOCKER_CREDENTIAL_ID}", usernameVariable: 'CI_REGISTRY_USERNAME', passwordVariable: 'CI_REGISTRY_PASSWORD')]){
                                                 sh """
+                                                MQ_MODE=${mqMode} \
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
                                                 TAG=${imageTag}\
                                                 ./e2e-k8s.sh \
