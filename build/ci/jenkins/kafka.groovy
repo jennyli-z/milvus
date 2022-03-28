@@ -232,7 +232,8 @@ pipeline {
                             body: '$DEFAULT_CONTENT',
                             recipientProviders: [developers(), culprits()],
                             replyTo: '$DEFAULT_REPLYTO',
-                            to: "${authorEmail},devops@zilliz.com"
+                            to: "jing.li@zilliz.com"
+                            // to: "${authorEmail},devops@zilliz.com"
                         }
                     }
                 }
