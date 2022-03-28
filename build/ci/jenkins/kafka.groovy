@@ -91,13 +91,18 @@ pipeline {
                     stage('Install') {
                         steps {
                             container('main') {
-                                // stash includes: 'tests/**', name: 'testCode', useDefaultExcludes: false
+                                stash includes: 'tests/**', name: 'testCode', useDefaultExcludes: false
                                 dir ('tests/scripts') {
                                     script {
                                         sh 'printenv'
                                         def clusterEnabled = "false"
-                                        if ("${MILVUS_SERVER_TYPE}" == 'distributed') {
+                                        def mqMode='pulsar'
+                                        if ("${MILVUS_SERVER_TYPE}" == "distributed-kafka"){
+                                             clusterEnabled = "true"
+                                             mqMode='kafka'
+                                        } else if("${MILVUS_SERVER_TYPE}" == "distributed-pulsar" ) {
                                             clusterEnabled = "true"
+                                            mqMode='pulsar'
                                         }
 
                                         if ("${MILVUS_CLIENT}" == "pymilvus") {
