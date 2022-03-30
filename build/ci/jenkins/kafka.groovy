@@ -2,7 +2,7 @@
 
 int total_timeout_minutes = 120
 int e2e_timeout_seconds = 700 * 60
-def imageTag='PR-16149-20220328-2c425f781'
+// def imageTag='PR-16149-20220328-2c425f781'
 int case_timeout_seconds = 10 * 60
 def chart_version='3.0.14'
 pipeline {
@@ -37,7 +37,13 @@ pipeline {
         JENKINS_BUILD_ID = "${env.BUILD_ID}"
         CI_MODE="pr"
     }
-
+    parameters{
+        string(
+            description: 'Image Tag',
+            name: 'imageTag',
+            defaultValue: 'PR-16149-20220329-ad5442d81'
+        )
+    }
     stages {
         // stage ('Build'){
         //     steps {
