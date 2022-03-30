@@ -40,7 +40,7 @@ pipeline {
     parameters{
         string(
             description: 'Image Tag',
-            name: 'imageTag',
+            name: 'image_tag',
             defaultValue: 'PR-16149-20220329-ad5442d81'
         )
     }
@@ -127,7 +127,7 @@ pipeline {
                                                 sh """
                                                 MQ_MODE=${mqMode} \
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
-                                                TAG=${imageTag}\
+                                                TAG=${image_tag}\
                                                 ./e2e-k8s.sh \
                                                 --skip-export-logs \
                                                 --skip-cleanup \
