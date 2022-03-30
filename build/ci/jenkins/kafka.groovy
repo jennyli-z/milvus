@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-int total_timeout_minutes = 120
+int total_timeout_minutes = 5 * 60
 int e2e_timeout_seconds = 700 * 60
 // def imageTag='PR-16149-20220328-2c425f781'
 int case_timeout_seconds = 10 * 60
