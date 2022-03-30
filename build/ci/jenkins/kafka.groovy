@@ -127,7 +127,7 @@ pipeline {
                                                 sh """
                                                 MQ_MODE=${mqMode} \
                                                 MILVUS_CLUSTER_ENABLED=${clusterEnabled} \
-                                                TAG=${image_tag}\
+                                                TAG=${params.image_tag}\
                                                 ./e2e-k8s.sh \
                                                 --skip-export-logs \
                                                 --skip-cleanup \
