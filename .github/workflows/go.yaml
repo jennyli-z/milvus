@@ -1,8 +1,20 @@
 name: Pull Request Action 
 on:  
-  pull_request:  
-    branches:  
-    - '2.1.0-go-review'  
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'internal/**'
+      - 'cmd/**'
+      - 'build/**'
+      - '.github/workflows/code-checker.yaml'
+      - '.env'
+      - docker-compose.yml
+      - Makefile
+      - '!**.md'
+      - '!build/ci/jenkins/**'
+      # FIXME(wxyu): not need to run code check, update the ci-passed rules and remove these two lines
+      - go.mod
+      - go.sum
 jobs:  
   build:  
     runs-on: ubuntu-latest  
