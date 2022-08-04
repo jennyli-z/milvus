@@ -60,7 +60,7 @@ function install_mac_deps() {
   brew uninstall grep
   brew install grep
   export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-  brew update && brew upgrade && brew cleanup
+  brew update && brew upgrade boost libomp ninja tbb cmake llvm ccache && brew cleanup
 
   if [[ $(arch) == 'arm64' ]]; then
     brew install openssl
