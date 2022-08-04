@@ -44,6 +44,8 @@ type MockQueryNode struct {
 	strResp    *milvuspb.StringResponse
 	infoResp   *querypb.GetSegmentInfoResponse
 	metricResp *milvuspb.GetMetricsResponse
+	configResp *internalpb.ShowConfigurationsResponse
+	StatsResp  *internalpb.GetStatisticsResponse
 	searchResp *internalpb.SearchResults
 	queryResp  *internalpb.RetrieveResults
 }
@@ -108,6 +110,10 @@ func (m *MockQueryNode) GetMetrics(ctx context.Context, req *milvuspb.GetMetrics
 	return m.metricResp, m.err
 }
 
+func (m *MockQueryNode) GetStatistics(ctx context.Context, req *querypb.GetStatisticsRequest) (*internalpb.GetStatisticsResponse, error) {
+	return m.StatsResp, m.err
+}
+
 func (m *MockQueryNode) Search(ctx context.Context, req *querypb.SearchRequest) (*internalpb.SearchResults, error) {
 	return m.searchResp, m.err
 }
@@ -132,6 +138,10 @@ func (m *MockQueryNode) SetRootCoord(rc types.RootCoord) error {
 
 func (m *MockQueryNode) SetIndexCoord(index types.IndexCoord) error {
 	return m.err
+}
+
+func (m *MockQueryNode) ShowConfigurations(ctx context.Context, req *internalpb.ShowConfigurationsRequest) (*internalpb.ShowConfigurationsResponse, error) {
+	return m.configResp, m.err
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,6 +329,15 @@ func Test_NewServer(t *testing.T) {
 		resp, err := server.SyncReplicaSegments(ctx, req)
 		assert.NoError(t, err)
 		assert.Equal(t, commonpb.ErrorCode_Success, resp.GetErrorCode())
+	})
+
+	t.Run("ShowConfigurtaions", func(t *testing.T) {
+		req := &internalpb.ShowConfigurationsRequest{
+			Pattern: "Cache",
+		}
+		resp, err := server.ShowConfigurations(ctx, req)
+		assert.NoError(t, err)
+		assert.Equal(t, commonpb.ErrorCode_Success, resp.GetStatus().GetErrorCode())
 	})
 
 	err = server.Stop()

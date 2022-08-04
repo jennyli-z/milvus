@@ -46,6 +46,7 @@ float_field_desc = "float type field"
 float_vec_field_desc = "float vector type field"
 binary_vec_field_desc = "binary vector type field"
 max_dim = 32768
+min_dim = 1
 gracefulTime = 1
 default_nlist = 128
 compact_segment_num_threshold = 4
@@ -63,6 +64,7 @@ value_content = "value_content"
 
 err_code = "err_code"
 err_msg = "err_msg"
+in_cluster_env = "IN_CLUSTER"
 
 """" List of parameters used to pass """
 get_invalid_strs = [
@@ -186,6 +188,7 @@ class CheckTasks:
     check_search_results = "check_search_results"
     check_query_results = "check_query_results"
     check_query_empty = "check_query_empty"  # verify that query result is empty
+    check_query_not_empty = "check_query_not_empty"
     check_distance = "check_distance"
     check_delete_compact = "check_delete_compact"
     check_merge_compact = "check_merge_compact"

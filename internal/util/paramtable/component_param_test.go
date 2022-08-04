@@ -91,9 +91,6 @@ func TestComponentParam(t *testing.T) {
 		t.Logf("querycoord timetick channel = %s", Params.QueryCoordTimeTick)
 
 		// -- querynode --
-		assert.Equal(t, Params.QueryNodeStats, "by-dev-query-node-stats")
-		t.Logf("querynode stats channel = %s", Params.QueryNodeStats)
-
 		assert.Equal(t, Params.QueryNodeSubName, "by-dev-queryNode")
 		t.Logf("querynode subname = %s", Params.QueryNodeSubName)
 
@@ -203,10 +200,16 @@ func TestComponentParam(t *testing.T) {
 			Params.Base.Save("proxy.maxTaskNum", "-asdf")
 			Params.initMaxTaskNum()
 		})
-	})
 
-	t.Run("test queryCoordConfig", func(t *testing.T) {
-		//Params := CParams.QueryCoordCfg
+		shouldPanic(t, "proxy.maxUserNum", func() {
+			Params.Base.Save("proxy.maxUserNum", "abc")
+			Params.initMaxUserNum()
+		})
+
+		shouldPanic(t, "proxy.maxRoleNum", func() {
+			Params.Base.Save("proxy.maxRoleNum", "abc")
+			Params.initMaxRoleNum()
+		})
 	})
 
 	t.Run("test queryNodeConfig", func(t *testing.T) {
@@ -234,10 +237,10 @@ func TestComponentParam(t *testing.T) {
 
 		// test query side config
 		chunkRows := Params.ChunkRows
-		assert.Equal(t, int64(32768), chunkRows)
+		assert.Equal(t, int64(1024), chunkRows)
 
 		nlist := Params.SmallIndexNlist
-		assert.Equal(t, int64(256), nlist)
+		assert.Equal(t, int64(128), nlist)
 
 		nprobe := Params.SmallIndexNProbe
 		assert.Equal(t, int64(16), nprobe)
@@ -281,6 +284,8 @@ func TestComponentParam(t *testing.T) {
 	t.Run("test dataCoordConfig", func(t *testing.T) {
 		Params := CParams.DataCoordCfg
 		assert.Equal(t, 24*60*60*time.Second, Params.SegmentMaxLifetime)
+
+		assert.True(t, Params.EnableGarbageCollection)
 	})
 
 	t.Run("test dataNodeConfig", func(t *testing.T) {

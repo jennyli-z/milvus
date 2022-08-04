@@ -49,9 +49,11 @@ service QueryNode {
   rpc GetSegmentInfo(GetSegmentInfoRequest) returns (GetSegmentInfoResponse) {}
   rpc SyncReplicaSegments(SyncReplicaSegmentsRequest) returns (common.Status) {}
 
+  rpc GetStatistics(GetStatisticsRequest) returns (internal.GetStatisticsResponse) {}
   rpc Search(SearchRequest) returns (internal.SearchResults) {}
   rpc Query(QueryRequest) returns (internal.RetrieveResults) {}
 
+  rpc ShowConfigurations(internal.ShowConfigurationsRequest) returns (internal.ShowConfigurationsResponse){}
   // https://wiki.lfaidata.foundation/display/MIL/MEP+8+--+Add+metrics+for+proxy
   rpc GetMetrics(milvus.GetMetricsRequest) returns (milvus.GetMetricsResponse) {}
 }
@@ -97,6 +99,14 @@ message ReleaseCollectionRequest {
   int64 dbID = 2;
   int64 collectionID = 3;
   int64 nodeID = 4;
+}
+
+message GetStatisticsRequest {
+  internal.GetStatisticsRequest req = 1;
+  repeated string dml_channels = 2;
+  repeated int64 segmentIDs = 3;
+  bool from_shard_leader = 4;
+  DataScope scope = 5; // All, Streaming, Historical
 }
 
 message LoadPartitionsRequest {

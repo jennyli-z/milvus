@@ -320,6 +320,47 @@ func TestImpl_isHealthy(t *testing.T) {
 	assert.True(t, isHealthy)
 }
 
+func TestImpl_ShowConfigurations(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	etcdCli, err := etcd.GetEtcdClient(&Params.EtcdCfg)
+	assert.NoError(t, err)
+	defer etcdCli.Close()
+
+	t.Run("test ShowConfigurations", func(t *testing.T) {
+		node, err := genSimpleQueryNode(ctx)
+		assert.NoError(t, err)
+		node.session = sessionutil.NewSession(node.queryNodeLoopCtx, Params.EtcdCfg.MetaRootPath, etcdCli)
+
+		pattern := "Cache"
+		req := &internalpb.ShowConfigurationsRequest{
+			Base:    genCommonMsgBase(commonpb.MsgType_WatchQueryChannels),
+			Pattern: pattern,
+		}
+
+		reqs, err := node.ShowConfigurations(ctx, req)
+		assert.NoError(t, err)
+		assert.Equal(t, reqs.Status.ErrorCode, commonpb.ErrorCode_Success)
+	})
+
+	t.Run("test ShowConfigurations node failed", func(t *testing.T) {
+		node, err := genSimpleQueryNode(ctx)
+		assert.NoError(t, err)
+		node.session = sessionutil.NewSession(node.queryNodeLoopCtx, Params.EtcdCfg.MetaRootPath, etcdCli)
+		node.UpdateStateCode(internalpb.StateCode_Abnormal)
+
+		pattern := "Cache"
+		req := &internalpb.ShowConfigurationsRequest{
+			Base:    genCommonMsgBase(commonpb.MsgType_WatchQueryChannels),
+			Pattern: pattern,
+		}
+
+		reqs, err := node.ShowConfigurations(ctx, req)
+		assert.NoError(t, err)
+		assert.Equal(t, reqs.Status.ErrorCode, commonpb.ErrorCode_UnexpectedError)
+	})
+}
+
 func TestImpl_GetMetrics(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -529,6 +570,48 @@ func TestImpl_searchWithDmlChannel(t *testing.T) {
 		FromShardLeader: false,
 		DmlChannels:     []string{defaultDMLChannel + "_suffix"},
 	}, defaultDMLChannel)
+	assert.NoError(t, err)
+}
+
+func TestImpl_GetCollectionStatistics(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	node, err := genSimpleQueryNode(ctx)
+	defer node.Stop()
+	require.NoError(t, err)
+
+	req, err := genGetCollectionStatisticRequest()
+	require.NoError(t, err)
+
+	node.queryShardService.addQueryShard(defaultCollectionID, defaultDMLChannel, defaultReplicaID)
+
+	_, err = node.GetStatistics(ctx, &queryPb.GetStatisticsRequest{
+		Req:             req,
+		FromShardLeader: false,
+		DmlChannels:     []string{defaultDMLChannel},
+	})
+	assert.NoError(t, err)
+}
+
+func TestImpl_GetPartitionStatistics(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	node, err := genSimpleQueryNode(ctx)
+	defer node.Stop()
+	require.NoError(t, err)
+
+	req, err := genGetPartitionStatisticRequest()
+	require.NoError(t, err)
+
+	node.queryShardService.addQueryShard(defaultCollectionID, defaultDMLChannel, defaultReplicaID)
+
+	_, err = node.GetStatistics(ctx, &queryPb.GetStatisticsRequest{
+		Req:             req,
+		FromShardLeader: false,
+		DmlChannels:     []string{defaultDMLChannel},
+	})
 	assert.NoError(t, err)
 }
 

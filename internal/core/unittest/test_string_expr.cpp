@@ -531,14 +531,14 @@ TEST(AlwaysTrueStringPlan, SearchWithOutputFields) {
     std::vector<const PlaceholderGroup*> ph_group_arr = {ph_group.get()};
 
     query::dataset::SearchDataset search_dataset{
-        knowhere::metric::L2,   //
-        num_queries,            //
-        topk,                   //
+        knowhere::metric::L2,  //
+        num_queries,           //
+        topk,                  //
         round_decimal,
         dim,       //
         query_ptr  //
     };
-    auto sub_result = FloatSearchBruteForce(search_dataset, vec_col.data(), N, nullptr);
+    auto sub_result = BruteForceSearch(search_dataset, vec_col.data(), N, nullptr);
 
     auto sr = segment->Search(plan.get(), ph_group.get(), time);
     segment->FillPrimaryKeys(plan.get(), *sr);

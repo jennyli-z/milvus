@@ -18,12 +18,18 @@ class ParamInfo:
         self.param_host = ""
         self.param_port = ""
         self.param_handler = ""
+        self.param_user = ""
+        self.param_password = ""
+        self.param_secure = False
         self.param_replica_num = ct.default_replica_num
 
-    def prepare_param_info(self, host, port, handler, replica_num):
+    def prepare_param_info(self, host, port, handler, replica_num, user, password, secure):
         self.param_host = host
         self.param_port = port
         self.param_handler = handler
+        self.param_user = user
+        self.param_password = password
+        self.param_secure = secure
         self.param_replica_num = replica_num
 
 
@@ -112,7 +118,15 @@ def gen_default_collection_schema(description=ct.default_desc, primary_field=ct.
                                                                     primary_field=primary_field, auto_id=auto_id)
     return schema
 
-
+def gen_general_collection_schema(description=ct.default_desc, primary_field=ct.default_int64_field_name,
+                                  auto_id=False, is_binary=False, dim=ct.default_dim):
+    if is_binary:
+        fields = [gen_int64_field(), gen_float_field(), gen_string_field(), gen_binary_vec_field(dim=dim)]
+    else:
+        fields = [gen_int64_field(), gen_float_field(), gen_string_field(), gen_float_vec_field(dim=dim)]
+    schema, _ = ApiCollectionSchemaWrapper().init_collection_schema(fields=fields, description=description,
+                                                                    primary_field=primary_field, auto_id=auto_id)
+    return schema
 
 def gen_string_pk_default_collection_schema(description=ct.default_desc, primary_field=ct.default_string_field_name,
                                   auto_id=False, dim=ct.default_dim):
@@ -637,8 +651,7 @@ def insert_data(collection_w, nb=3000, is_binary=False, is_all_data_type=False,
     binary_raw_vectors = []
     insert_ids = []
     start = insert_offset
-    log.info("insert_data: inserting data into collection %s (num_entities: %s)"
-             % (collection_w.name, nb))
+    log.info(f"inserted {nb} data into collection {collection_w.name}")
     for i in range(num):
         default_data = gen_default_dataframe_data(nb // num, dim=dim, start=start)
         if is_binary:
@@ -671,18 +684,11 @@ def get_segment_distribution(res):
     Get segment distribution
     """
     from collections import defaultdict
-    segment_distribution = defaultdict(lambda: {"growing": [], "sealed": []})
+    segment_distribution = defaultdict(lambda: {"sealed": []})
     for r in res:
         for node_id in r.nodeIds:
-            if node_id not in segment_distribution:
-                segment_distribution[node_id] = {
-                    "growing": [],
-                    "sealed": []
-                }
             if r.state == 3:
                 segment_distribution[node_id]["sealed"].append(r.segmentID)
-            if r.state == 2:
-                segment_distribution[node_id]["growing"].append(r.segmentID)
 
     return segment_distribution
 
