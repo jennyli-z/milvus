@@ -32,7 +32,7 @@ type DataCoord struct {
 	svr *grpcdatacoordclient.Server
 }
 
-// NewDataCoord creates a new DataCoord
+// NewDataCoord creates a new DataCoord-test
 func NewDataCoord(ctx context.Context, factory dependency.Factory) (*DataCoord, error) {
 	s := grpcdatacoordclient.NewServer(ctx, factory)
 
