@@ -80,7 +80,7 @@ jobs:
               echo "restart count for ${container} is $(docker inspect ${container} --format '{{json .RestartCount}}')"
           done
       - name: Upload coverage to Codecov
-        if: "github.repository == 'milvus-io/milvus'"
+        # if: "github.repository == 'milvus-io/milvus'"
         uses: codecov/codecov-action@v3.1.1
         id: upload_cov
         with:
@@ -89,7 +89,8 @@ jobs:
           name: ubuntu-${{ matrix.ubuntu }}-unittests
           fail_ci_if_error: false
       - name: Retry Upload coverage to Codecov
-        if: "steps.upload_cov.outcome=='failure' && github.repository == 'milvus-io/milvus'"
+      if: "steps.upload_cov.outcome=='failure'
+        # if: "steps.upload_cov.outcome=='failure' && github.repository == 'milvus-io/milvus'"
         uses: codecov/codecov-action@v3.1.1
         id: retry_upload_cov
         with:
