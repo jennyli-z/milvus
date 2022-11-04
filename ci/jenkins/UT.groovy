@@ -16,7 +16,7 @@ pipeline {
             kubernetes {
                 inheritFrom 'default'
                 defaultContainer 'main'
-                yamlFile 'ci/jenkins/pod/rte.yaml'
+                yamlFile 'ci/jenkins/pod/ut.yaml'
                 customWorkspace '/home/jenkins/agent/workspace'
             }
     }
@@ -44,6 +44,7 @@ pipeline {
                 container('jnlp') {
                     dir ('tests/scripts') {
                         script {
+                            sh 'sleep 48'
                             // def authorEmail = sh(returnStdout: true, script: './get_author_email.sh ')
                             emailext subject: '$DEFAULT_SUBJECT',
                             body: '$DEFAULT_CONTENT',
