@@ -23,7 +23,7 @@ spec:
         cpu: "6"
         memory: 12Gi
       requests:
-        cpu: "4"
+        cpu: "1"
         memory: 1Gi
     volumeMounts:
     - mountPath: /docker-graph
